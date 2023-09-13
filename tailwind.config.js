@@ -12,6 +12,17 @@ module.exports = {
             },
             colors: {
                 abu: "#414141",
+                main: "#2395FF",
+            },
+            height: {
+                height: "30rem",
+                custom: "26rem",
+            },
+            width: {
+                custom: "21rem",
+            },
+            letterSpacing: {
+                wild: "0.3rem",
             },
         },
     },
