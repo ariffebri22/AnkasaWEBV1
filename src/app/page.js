@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -9,7 +10,7 @@ import Bali from "../../public/image/bali.png";
 import back from "../../public/image/btnback.svg";
 import backwhite from "../../public/image/btnbackwhite.svg";
 
-export default function Home() {
+function Home() {
     return (
         <>
             <Navbar />
@@ -27,8 +28,8 @@ export default function Home() {
                 <div className=" flex justify-end sm:flex-col">
                     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="171.43" viewBox="0 0 232 246" fill="none" className="mr-10 mt-9 -rotate-12 sm:hidden -z-50">
                         <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
                             d="M75.8267 2.00037C130.421 -11.0624 159.649 43.6408 187.892 84.1019C214.743 122.571 250.689 167.035 218.118 205.852C182.265 248.582 114.138 253.381 61.4892 234.747C15.3301 218.41 -2.09434 173.998 0.684063 128.895C3.84507 77.5814 18.834 15.6371 75.8267 2.00037Z"
                             fill="#2395FF"
                         />
@@ -39,16 +40,16 @@ export default function Home() {
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="120" height="171.43" viewBox="0 0 232 246" fill="none" className="hidden mr-8 mt-20 sm:mt-4 -rotate-12 sm:flex sm:ml-20 md:hidden">
                         <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
                             d="M75.8267 2.00037C130.421 -11.0624 159.649 43.6408 187.892 84.1019C214.743 122.571 250.689 167.035 218.118 205.852C182.265 248.582 114.138 253.381 61.4892 234.747C15.3301 218.41 -2.09434 173.998 0.684063 128.895C3.84507 77.5814 18.834 15.6371 75.8267 2.00037Z"
                             fill="#2395FF"
                         />
                     </svg>
                     <svg xmlns="http://www.w3.org/2000/svg" width="140" height="171.43" viewBox="0 0 232 246" fill="none" className="hidden mr-8 mt-20 sm:mt-4 -rotate-12 sm:ml-20 md:flex md:mt-12 -z-20">
                         <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
                             d="M75.8267 2.00037C130.421 -11.0624 159.649 43.6408 187.892 84.1019C214.743 122.571 250.689 167.035 218.118 205.852C182.265 248.582 114.138 253.381 61.4892 234.747C15.3301 218.41 -2.09434 173.998 0.684063 128.895C3.84507 77.5814 18.834 15.6371 75.8267 2.00037Z"
                             fill="#2395FF"
                         />
@@ -56,7 +57,7 @@ export default function Home() {
                 </div>
             </div>
             <div className="flex flex-col mt-6 md:mt-20 lg:mt-32">
-                <div class="container mx-auto flex justify-between items-end px-6">
+                <div className="container mx-auto flex justify-between items-end px-6">
                     <div>
                         <h1 className="font-poppins text-main font-semibold text-sm tracking-wild">TRENDING</h1>
                         <h1 className="font-poppins text-black text-2xl font-semibold">Trending destinations</h1>
@@ -65,7 +66,7 @@ export default function Home() {
                         <h1 className="font-poppins text-sm text-main font-medium">View all</h1>
                     </div>
                 </div>
-                <div class="container flex mt-10 mx-auto justify-center px-6 gap-4 md:gap-20 lg:gap-4 relative">
+                <div className="container flex mt-10 mx-auto justify-center px-6 gap-4 md:gap-20 lg:gap-4 relative">
                     <div className="w-48 h-64 bg-slate-300 rounded-3xl overflow-hidden relative">
                         <div className=" absolute bg-gradient-to-t from-black to-transparent w-full h-full flex flex-col justify-between py-4">
                             <div className="px-5">
@@ -81,12 +82,12 @@ export default function Home() {
                                     <h1 className="text-poppins text-xl font-semibold text-white ">Japan</h1>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30" fill="none">
-                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fill-opacity="0.17" />
-                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" stroke-width="2" />
+                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fillOpacity="0.17" />
+                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" strokeWidth="2" />
                                 </svg>
                             </div>
                         </div>
-                        <Image src={Japan} className="w-full h-full object-cover object-center " />
+                        <Image src={Japan} className="w-full h-full object-cover object-center " alt="japan" />
                     </div>
                     <div className="hidden md:block w-48 h-64 bg-slate-300 rounded-3xl overflow-hidden relative">
                         <div className=" absolute bg-gradient-to-t from-black to-transparent w-full h-full flex flex-col justify-between py-4">
@@ -103,12 +104,12 @@ export default function Home() {
                                     <h1 className="text-poppins text-xl font-semibold text-white ">Spain</h1>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30" fill="none">
-                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fill-opacity="0.17" />
-                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" stroke-width="2" />
+                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fillOpacity="0.17" />
+                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" strokeWidth="2" />
                                 </svg>
                             </div>
                         </div>
-                        <Image src={Spain} className="w-full h-full object-cover object-center " />
+                        <Image src={Spain} className="w-full h-full object-cover object-center " alt="spain" />
                     </div>
                     <div className="hidden md:block w-48 h-64 bg-slate-300 rounded-3xl overflow-hidden relative">
                         <div className=" absolute bg-gradient-to-t from-black to-transparent w-full h-full flex flex-col justify-between py-4">
@@ -125,12 +126,12 @@ export default function Home() {
                                     <h1 className="text-poppins text-xl font-semibold text-white ">Indonesia</h1>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30" fill="none">
-                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fill-opacity="0.17" />
-                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" stroke-width="2" />
+                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fillOpacity="0.17" />
+                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" strokeWidth="2" />
                                 </svg>
                             </div>
                         </div>
-                        <Image src={Jakarta} className="w-full h-full object-cover object-center " />
+                        <Image src={Jakarta} className="w-full h-full object-cover object-center " alt="jkt" />
                     </div>
                     <div className="hidden lg:block w-48 h-64 bg-slate-300 rounded-3xl overflow-hidden relative">
                         <div className=" absolute bg-gradient-to-t from-black to-transparent w-full h-full flex flex-col justify-between py-4">
@@ -147,12 +148,12 @@ export default function Home() {
                                     <h1 className="text-poppins text-xl font-semibold text-white ">Indonesia</h1>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30" fill="none">
-                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fill-opacity="0.17" />
-                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" stroke-width="2" />
+                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fillOpacity="0.17" />
+                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" strokeWidth="2" />
                                 </svg>
                             </div>
                         </div>
-                        <Image src={Cianjur} className="w-full h-full object-cover object-center " />
+                        <Image src={Cianjur} className="w-full h-full object-cover object-center " alt="cjr" />
                     </div>
                     <div className="hidden lg:block w-48 h-64 bg-slate-300 rounded-3xl overflow-hidden relative">
                         <div className=" absolute bg-gradient-to-t from-black to-transparent w-full h-full flex flex-col justify-between py-4">
@@ -169,22 +170,22 @@ export default function Home() {
                                     <h1 className="text-poppins text-xl font-semibold text-white ">Indonesia</h1>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30" fill="none">
-                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fill-opacity="0.17" />
-                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" stroke-width="2" />
+                                    <circle cx="14.5" cy="14.7703" r="14.5" fill="white" fillOpacity="0.17" />
+                                    <path d="M12.3435 9.67674L16.0228 13.3561C16.8039 14.1371 16.8039 15.4034 16.0228 16.1845L12.3435 19.8638" stroke="white" strokeWidth="2" />
                                 </svg>
                             </div>
                         </div>
-                        <Image src={Bali} className="w-full h-full object-cover object-center " />
+                        <Image src={Bali} className="w-full h-full object-cover object-center " alt="bali" />
                     </div>
                     <div className="absolute right-10 md:-right-6 top-7 -z-50">
                         <svg xmlns="http://www.w3.org/2000/svg" width="188" height="210" viewBox="0 0 188 210" fill="none">
-                            <rect width="136" height="174" rx="20" transform="matrix(-1 0 0 1 188 18)" fill="#C4C4C4" fill-opacity="0.65" />
-                            <rect width="166" height="210" rx="20" transform="matrix(-1 0 0 1 166 0)" fill="#737373" fill-opacity="0.65" />
+                            <rect width="136" height="174" rx="20" transform="matrix(-1 0 0 1 188 18)" fill="#C4C4C4" fillOpacity="0.65" />
+                            <rect width="166" height="210" rx="20" transform="matrix(-1 0 0 1 166 0)" fill="#737373" fillOpacity="0.65" />
                         </svg>
                     </div>
                 </div>
             </div>
-            <div class="container mx-auto px-6">
+            <div className="container mx-auto px-6">
                 <div className=" bg-main w-full h-80 md:h-96 lg:h-height lg:flex lg:flex-col lg:justify-center md:px-12 mt-20 rounded-3xl overflow-hidden relative">
                     <div className="mt-5 flex flex-col items-center justify-center lg:mt-14 lg:mb-8">
                         <h1 className="font-poppins text-white font-light tracking-widest">Top 10</h1>
@@ -193,54 +194,54 @@ export default function Home() {
                     <div className=" flex justify-between mt-6 px-2">
                         <div className="md:hidden flex justify-center items-center mb-12">
                             <div className="border-4 border-white w-16 h-12 flex justify-center items-center rounded-lg">
-                                <Image src={backwhite} width={15} />
+                                <Image src={backwhite} width={15} alt="backwhite" />
                             </div>
                         </div>
                         <div className="flex flex-col justify-center z-10">
                             <div className="bg-main border-white border-8 w-40 h-40 rounded-full flex justify-center items-center">
-                                <Image src={Cianjur} className="rounded-full w-32 h-32" />
+                                <Image src={Cianjur} className="rounded-full w-32 h-32" alt="cjr" />
                             </div>
                             <h1 className="text-center mt-6 text-white font-medium text-lg">CIANJUR</h1>
                         </div>
                         <div className="hidden md:flex flex-col justify-center z-10">
                             <div className="bg-main border-white border-8 w-40 h-40 rounded-full flex justify-center items-center">
-                                <Image src={Bali} className="rounded-full w-32 h-32" />
+                                <Image src={Bali} className="rounded-full w-32 h-32" alt="bali" />
                             </div>
                             <h1 className="text-center mt-6 text-white font-medium text-lg">BALI</h1>
                         </div>
                         <div className="hidden md:flex flex-col justify-center z-10">
                             <div className="bg-main border-white border-8 w-40 h-40 rounded-full flex justify-center items-center">
-                                <Image src={Japan} className="rounded-full w-32 h-32 object-cover object-center" />
+                                <Image src={Japan} className="rounded-full w-32 h-32 object-cover object-center" alt="japan" />
                             </div>
                             <h1 className="text-center mt-6 text-white font-medium text-lg">TOKYO</h1>
                         </div>
                         <div className="hidden lg:flex flex-col justify-center ">
                             <div className="bg-main border-white border-8 w-40 h-40 rounded-full flex justify-center items-center">
-                                <Image src={Spain} className="rounded-full w-32 h-32" />
+                                <Image src={Spain} className="rounded-full w-32 h-32" alt="spain" />
                             </div>
                             <h1 className="text-center mt-6 text-white font-medium text-lg">BARCELONA</h1>
                         </div>
                         <div className="hidden lg:flex flex-col justify-center ">
                             <div className="bg-main border-white border-8 w-40 h-40 rounded-full flex justify-center items-center">
-                                <Image src={Cianjur} className="rounded-full w-32 h-32" />
+                                <Image src={Cianjur} className="rounded-full w-32 h-32" alt="cjr" />
                             </div>
                             <h1 className="text-center mt-6 text-white font-medium text-lg">CIANJUR</h1>
                         </div>
                         <div className="md:hidden flex justify-center items-center mb-12">
                             <div className="border-4 border-white bg-white w-16 h-12 flex justify-center items-center rounded-lg">
-                                <Image src={back} width={15} />
+                                <Image src={back} width={15} alt="back" />
                             </div>
                         </div>
                     </div>
                     <div className="hidden md:flex justify-center gap-10 mt-5 lg:mt-10 ">
                         <div className="hidden md:flex justify-center items-center mb-10">
                             <div className="border-4 border-white w-16 h-12 flex justify-center items-center rounded-lg">
-                                <Image src={backwhite} width={15} />
+                                <Image src={backwhite} width={15} alt="backwhite" />
                             </div>
                         </div>
                         <div className="hidden md:flex justify-center items-center mb-10">
                             <div className="border-4 border-white bg-white w-16 h-12 flex justify-center items-center rounded-lg">
-                                <Image src={back} width={15} />
+                                <Image src={back} width={15} alt="back" />
                             </div>
                         </div>
                     </div>
@@ -266,3 +267,5 @@ export default function Home() {
         </>
     );
 }
+
+export default Home;
