@@ -1,34 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">ANKASA TICKETING</h1>
 
-## Getting Started
+<p align="center">
+  <img height="150" src="https://i.ibb.co/WFZVxPb/arkasa-logo.png"  />
+</p>
+<p align="center">
+  Built with Next Js.
+</p>
 
-First, run the development server:
+## About
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+ANKASA TICKETING is an online ticketing website that provides various features for online plane ticket reservations. Built with Next JS, Tailwind CSS, Express JS, and Postgree SQL.
+
+## Dependencies
+
+-   [Next Js](https://nextjs.org/)
+-   [Axios](https://www.npmjs.com/package/axios)
+-   [Tailwind](https://https://tailwindcss.com/)
+-   [Sweetalert](https://www.npmjs.com/package/sweetalert)
+-   [Redux](https://www.npmjs.com/package/redux)
+
+## How To Install
+
+-   Clone
+
+```
+git clone https://github.com/ariffebri22/AnkasaWEBV1.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   Install Module
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+-   Run Project
 
-## Learn More
+```
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Build Project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<!--
+## Screenshots
+| Login Page | Register Page |
+| ------------- | ------------- |
+| ![Login](https://github.com/fwzfrds/arkasa-fe/blob/branch/Nisrina/login.png?raw=true "Login Page") | ![Register](https://github.com/fwzfrds/arkasa-fe/blob/branch/Nisrina/register.png?raw=true "Register Page")|
 
-## Deploy on Vercel
+| Landing Page  | Search Page |
+| ------------- | ------------- |
+| ![Landing](https://github.com/fwzfrds/arkasa-fe/blob/branch/Nisrina/landing.png?raw=true "Landing Page") | ![Search](/public/assets/img/filter.png?raw=true "Search Page") |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Profile Page | My Booking Page |
+| ------------- | ------------- |
+| ![Profile](https://github.com/fwzfrds/arkasa-fe/blob/branch/Nisrina/profile.png?raw=true "Profile Page") | ![My Booking](https://github.com/fwzfrds/arkasa-fe/blob/branch/Nisrina/my-booking.png?raw=true "My Booking Page") |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Booking Detail Page |
+| ------------- |
+| ![Booking Detail](https://res.cloudinary.com/wazcomp/image/upload/v1659368177/booking-detail_gknbpj.png?raw=true "Booking Detail Page") -->
+
+<!-- ## Backend
+* [`BACKEND ANKASA TICKETING`](https://github.com/)
+
+## Deploy
+* [`WEB ANKASA TICKETING`](https://ankasa-fwzfrds.vercel.app/) -->
