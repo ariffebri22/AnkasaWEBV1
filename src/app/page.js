@@ -210,7 +210,7 @@ export default function Home() {
                         </div>
                         <div className="hidden md:flex flex-col justify-center z-10">
                             <div className="bg-main border-white border-8 w-40 h-40 rounded-full flex justify-center items-center">
-                                <Image src={Japan} className="rounded-full w-32 h-32" />
+                                <Image src={Japan} className="rounded-full w-32 h-32 object-cover object-center" />
                             </div>
                             <h1 className="text-center mt-6 text-white font-medium text-lg">TOKYO</h1>
                         </div>
