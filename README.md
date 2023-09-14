@@ -6,12 +6,31 @@
 <p align="center">
   Built with Next Js.
 </p>
+<br/>
+    <br/>
+    <a href="https://github.com/ariffebri22/AnkasaWEBV1"><strong>Explore the docs »</strong></a>
+    <br/>
+    <br/>
+    <a href="https://github.com/ariffebri22/AnkasaWEBV1">View Demo</a>
+    .
+    <a href="https://github.com/ariffebri22/AnkasaWEBV1/issues">Report Bug</a>
+    .
+    <a href="https://github.com/ariffebri22/AnkasaWEBV1/issues">Request Feature</a>
+  </p>
+</p>
 
-## About
+## Table Of Contents
+
+-   [About the Project](#about-the-project)
+-   [Built With](#built-with)
+-   [Installation](#installation)
+-   [Contact](#contact)
+
+## About the Project
 
 ANKASA TICKETING is an online ticketing website that provides various features for online plane ticket reservations. Built with Next JS, Tailwind CSS, Express JS, and Postgree SQL.
 
-## Dependencies
+## Built With
 
 -   [Next Js](https://nextjs.org/)
 -   [Axios](https://www.npmjs.com/package/axios)
@@ -19,7 +38,7 @@ ANKASA TICKETING is an online ticketing website that provides various features f
 -   [Sweetalert](https://www.npmjs.com/package/sweetalert)
 -   [Redux](https://www.npmjs.com/package/redux)
 
-## How To Install
+## Installation
 
 -   Clone
 
@@ -44,6 +63,16 @@ npm run start
 ```
 npm run build
 ```
+
+## Contact
+
+-   Email : [`muhammadariffebriansyah@gmail.com`](mailto:muhammadariffebriansyah@gmail.com)
+
+-   LinkedIn : [`/in/ariffebri/`](https://www.linkedin.com/in/ariffebri/)
+
+-   GitHub : [`ariffebri22`](https://github.com/ariffebri22)
+
+-   Website : [`ariffebriansyah.com`](https://ariffebriansyah.com)
 
 <!--
 ## Screenshots
