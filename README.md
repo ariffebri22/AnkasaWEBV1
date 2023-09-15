@@ -5,7 +5,6 @@
 </p>
 <p align="center">
   Built with Next Js.
-</p>
 <br/>
     <br/>
     <a href="https://github.com/ariffebri22/AnkasaWEBV1"><strong>Explore the docs »</strong></a>
@@ -16,7 +15,6 @@
     <a href="https://github.com/ariffebri22/AnkasaWEBV1/issues">Report Bug</a>
     .
     <a href="https://github.com/ariffebri22/AnkasaWEBV1/issues">Request Feature</a>
-  </p>
 </p>
 
 ## Table Of Contents
