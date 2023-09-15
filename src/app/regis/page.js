@@ -33,7 +33,7 @@ function regis() {
         setLoading(true);
 
         if (inputData.name === "" || inputData.email === "" || inputData.password === "") {
-            swal({
+            Swal({
                 title: "Register",
                 text: "Must fill in all fields",
                 icon: "warning",

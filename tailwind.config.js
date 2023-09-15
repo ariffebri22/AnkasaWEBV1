@@ -24,6 +24,10 @@ module.exports = {
             letterSpacing: {
                 wild: "0.3rem",
             },
+            fontSize: {
+                small: "9px",
+                little: "10px",
+            },
         },
     },
     plugins: [],
