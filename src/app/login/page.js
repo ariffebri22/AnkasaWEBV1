@@ -29,7 +29,7 @@ export default function login() {
         setLoading(true);
 
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}users/login`, {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}auth/login`, {
                 email,
                 password,
             });

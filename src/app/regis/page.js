@@ -51,7 +51,7 @@ function regis() {
                 password: inputData.password,
             };
             axios
-                .post(`${process.env.NEXT_PUBLIC_API_URL}users/register`, body)
+                .post(`${process.env.NEXT_PUBLIC_API_URL}auth/register`, body)
                 .then((res) => {
                     console.log(res.data);
                     Swal.fire({
