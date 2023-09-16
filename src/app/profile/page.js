@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
-import { protectedRoute } from "../privateRoute";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import { protectedRoute } from "../../utils/privateRoute";
 import illustrasi2 from "../../../public/image/illustrationankasa.svg";
 
 function profile() {

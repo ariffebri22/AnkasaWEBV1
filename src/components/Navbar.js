@@ -129,7 +129,7 @@ export default function Navbar() {
 
     return (
         <>
-            <header className="w-full fixed z-50">
+            <header className="w-full fixed z-50 top-0">
                 <div className="bg-white py-4 lg:px-28 max-w-7xl mx-auto flex px-5 justify-between">
                     <div className="flex items-center">
                         <Image src={ankasa} alt="ankasa" onClick={handleHome} className="cursor-pointer" />
@@ -422,7 +422,7 @@ export default function Navbar() {
                         </div>
                     )}
                     {openProfile && (
-                        <div className="bg-white w-60 h-custom mt-14 rounded-lg p-6 fixed right-6 lg:right-28 z-50 shadow-lg shadow-black/50 flex flex-col items-center">
+                        <div className="bg-white w-60 h-custom mt-14 rounded-lg p-6 fixed right-6 lg:right-28 z-50 shadow-lg shadow-black/50 hidden md:flex flex-col items-center">
                             <Image src={ImgProfile} width={100} alt="ImgProfile" className="rounded-full border-2 border-main p-1 cursor-pointer" onClick={handleOpenProfile} />
                             <div className=" flex flex-col items-center mt-4 w-full">
                                 <h1 className="font-poppins font-bold text-xl text-black">Arif F</h1>
@@ -505,6 +505,7 @@ export default function Navbar() {
                         </div>
                     )}
                     <div className="md:hidden z-50">
+                        <div className={`fixed bg-black inset-0 bg-opacity-50 w-full  ${isMenuOpen ? "block" : "hidden"}`} onClick={toggleMenu}></div>
                         <div className={`fixed inset-0 bg-opacity-50 w-full transform transition-transform ${isMenuOpen ? "translate-x-0 transition duration-500 ease-in-out" : "translate-x-full transition duration-500 ease-in-out"}`}>
                             <div className="absolute bg-blue-500 w-72 h-screen right-0 pt-4 px-4">
                                 <div className="flex justify-between items-center">

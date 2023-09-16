@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import Japan from "../../public/image/ImageMain.png";
 import Spain from "../../public/image/spain.png";
 import Jakarta from "../../public/image/jakarta.png";

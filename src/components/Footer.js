@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Footer() {
     return (
         <>
-            <div className="container mx-auto mt-20">
+            <div className="container mx-auto mt-2">
                 <div className=" w-full h-96 md:h-56 flex px-6 md:mb-6">
                     <div className="w-full h-64 md:flex  md:h-56 md:justify-between ">
                         <div className="md:w-64 lg:w-80">
@@ -34,8 +34,8 @@ export default function Footer() {
                             </div>
                             <div className=" w-1/2 md:w-2/3 md:ml-6 lg:ml-20 ">
                                 <h1 className="font-poppins text-center text-black font-semibold mb-3 md:mb-7 text-sm">Download Ankasa app</h1>
-                                <Image src={appstore} className="w-full mb-2 md:mb-4" alt="appstore"/>
-                                <Image src={playstore} className="w-full" alt="playstore"/>
+                                <Image src={appstore} className="w-full mb-2 md:mb-4" alt="appstore" />
+                                <Image src={playstore} className="w-full" alt="playstore" />
                             </div>
                         </div>
                         <div className=" flex mt-5 md:mt-8">
