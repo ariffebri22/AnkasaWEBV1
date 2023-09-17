@@ -153,7 +153,7 @@ export default function Navbar() {
                         <div className="hidden md:flex w-40 h-10 items-center justify-between">
                             <Image src={notif} width={30} alt="notif" className="cursor-pointer" />
                             <Image src={message} width={30} alt="message" className="cursor-pointer" />
-                            <Image src={ImgProfile} width={40} alt="ImgProfile" className="rounded-full border-2 border-main p-0.5 cursor-pointer" onClick={handleOpenProfile} />
+                            <Image src={ImgProfile} width={40} alt="ImgProfile" className="rounded-full border-2 border-main p-0.5 cursor-pointer" onClick={handleProfile} />
                         </div>
                     ) : (
                         <div className="hidden md:flex w-28 h-10 bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50">
