@@ -18,6 +18,7 @@ module.exports = {
                 height: "30rem",
                 custom: "26rem",
                 custom1: "34rem",
+                custom2: "33rem",
             },
             width: {
                 custom: "21rem",
