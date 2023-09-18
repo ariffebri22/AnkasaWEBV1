@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Footer() {
     return (
         <>
-            <div className="container mx-auto mt-2">
+            <div className="container mx-auto mt-2 bg-white">
                 <div className=" w-full h-96 md:h-56 flex px-6 md:mb-6">
                     <div className="w-full h-64 md:flex  md:h-56 md:justify-between ">
                         <div className="md:w-64 lg:w-80">

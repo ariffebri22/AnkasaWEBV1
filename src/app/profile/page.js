@@ -40,7 +40,7 @@ function profile() {
     return (
         <>
             <Navbar />
-            <div className=" flex flex-col md:flex-row justify-between pt-20 bg-slate-100">
+            <div className=" flex flex-col md:flex-row justify-between pt-20 bg-bgcolor">
                 <div className="bg-white hidden w-80 lg:w-96 h-custom3 mt-6 ml-6 rounded-lg p-6 z-50 md:flex flex-col items-center">
                     <Image src={ImgProfile} width={100} alt="ImgProfile" className="rounded-full border-2 border-main p-1 cursor-pointer" />
                     <button className="border-2 border-main py-2 px-4 mt-2 rounded-md text-xs font-poppins font-semibold text-main hover:bg-main hover:text-white cursor-pointer">Change Photo</button>

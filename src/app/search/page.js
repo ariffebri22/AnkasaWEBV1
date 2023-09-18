@@ -5,11 +5,13 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import RangeSlider from "../../components/RangeSlider";
 import { protectedRoute } from "../../utils/privateRoute";
+import { useRouter } from "next/navigation";
 import AirAsia from "../../../public/image/maskapaiairasia.png";
 import GarudaIndo from "../../../public/image/maskapaigarudaindo.png";
 import LionAir from "../../../public/image/maskapailionair.png";
 
 function search() {
+    const router = useRouter();
     const [openTransit, setOpenTransit] = useState(false);
     const [openFacilities, setOpenFacilities] = useState(false);
     const [openDepTime, setOpenDepTime] = useState(false);
@@ -24,6 +26,10 @@ function search() {
 
     const toggleMenu = () => {
         setIsFilterOpen(!isFilterOpen);
+    };
+
+    const handleSelect = () => {
+        router.push("/search/details");
     };
 
     return (
@@ -409,7 +415,7 @@ function search() {
                                     </div>
                                 </div>
                                 <div className="flex flex-col md:flex-row-reverse w-20 md:w-full gap-1  md:justify-between md:items-center">
-                                    <div className="bg-main hidden md:w-28 md:h-10 w-20 h-8 rounded-lg md:flex justify-center items-center hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50">
+                                    <div className="bg-main hidden md:w-28 md:h-10 w-20 h-8 rounded-lg md:flex justify-center items-center hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50" onClick={handleSelect}>
                                         <h1 className="text-white font-poppins font-medium text-sm">Select</h1>
                                     </div>
                                     <div className="flex flex-col items-end justify-center mt-1">
@@ -470,7 +476,7 @@ function search() {
                                         />
                                     </svg>
                                 </div>
-                                <div className="bg-main md:hidden w-20 h-8 rounded-lg flex justify-center items-center hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50">
+                                <div className="bg-main md:hidden w-20 h-8 rounded-lg flex justify-center items-center hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50" onClick={handleSelect}>
                                     <h1 className="text-white font-poppins font-medium text-sm">Select</h1>
                                 </div>
                             </div>

@@ -13,6 +13,7 @@ module.exports = {
             colors: {
                 abu: "#414141",
                 main: "#2395FF",
+                bgcolor: "#F5F6FA",
             },
             height: {
                 height: "30rem",
