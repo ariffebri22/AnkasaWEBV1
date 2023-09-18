@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
@@ -10,6 +11,7 @@ import GarudaIndo from "../../../../public/image/maskapaigarudaindo.png";
 import countryData from "../../../data/countryData";
 
 function details() {
+    const router = useRouter();
     const [isFlightPayment, setIsFlightPayment] = useState(true);
     const [isPassenger, setIsPassenger] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState("Indonesia"); // Default negara
@@ -28,6 +30,10 @@ function details() {
         } else {
             setIsPassenger(true);
         }
+    };
+
+    const handleSelect = () => {
+        router.push("/search/details/payment");
     };
 
     return (
@@ -153,7 +159,7 @@ function details() {
                             </div>
                         </div>
                         <div className="hidden md:flex items-center justify-center">
-                            <div className="flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 my-6">
+                            <div className="flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 my-6" onClick={handleSelect}>
                                 <h1 className="text-white text-sm font-medium">Proceed to Payment</h1>
                             </div>
                         </div>
@@ -232,7 +238,7 @@ function details() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="md:hidden flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 my-6">
+                            <div className="md:hidden flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 my-6" onClick={handleSelect}>
                                 <h1 className="text-white text-sm font-medium">Proceed to Payment</h1>
                             </div>
                         </div>
