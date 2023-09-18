@@ -77,7 +77,7 @@ function details() {
                                     </label>
                                     <PhoneInput country={"id"} containerClass="p-4 border-b focus:border-primary" inputStyle={{ border: "none", width: "100%" }} buttonStyle={{ border: "none", backgroundColor: "white" }} />
                                 </div>
-                                <div className="w-full bg-red-100 h-10 mt-4 flex justify-center items-center gap-2 rounded-lg">
+                                <div className="w-full bg-red-100 h-10 mt-4 flex justify-center md:justify-start px-4 items-center gap-2 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                         <path
                                             d="M22.3993 20.0625L12.6493 3.1875C12.504 2.93672 12.2532 2.8125 12.0001 2.8125C11.747 2.8125 11.4939 2.93672 11.3509 3.1875L1.60089 20.0625C1.31261 20.5641 1.67354 21.1875 2.25011 21.1875H21.7501C22.3267 21.1875 22.6876 20.5641 22.3993 20.0625ZM11.2501 9.75C11.2501 9.64687 11.3345 9.5625 11.4376 9.5625H12.5626C12.6657 9.5625 12.7501 9.64687 12.7501 9.75V14.0625C12.7501 14.1656 12.6657 14.25 12.5626 14.25H11.4376C11.3345 14.25 11.2501 14.1656 11.2501 14.0625V9.75ZM12.0001 18C11.7057 17.994 11.4254 17.8728 11.2193 17.6625C11.0133 17.4522 10.8978 17.1695 10.8978 16.875C10.8978 16.5805 11.0133 16.2978 11.2193 16.0875C11.4254 15.8772 11.7057 15.756 12.0001 15.75C12.2945 15.756 12.5748 15.8772 12.7809 16.0875C12.987 16.2978 13.1024 16.5805 13.1024 16.875C13.1024 17.1695 12.987 17.4522 12.7809 17.6625C12.5748 17.8728 12.2945 17.994 12.0001 18Z"
@@ -96,7 +96,7 @@ function details() {
                                 <div className="w-full bg-gray-100 h-10 mt-4 flex justify-between items-center gap-2 rounded-lg p-2">
                                     <h1 className="text-gray-500 text-xs font-poppins font-medium">Passenger : 1 Adult</h1>
                                     <div className="flex items-center">
-                                        <h1 className="text-gray-500 text-xs font-poppins font-medium w-24">Same as contact person</h1>
+                                        <h1 className="text-gray-500 text-xs font-poppins font-medium w-24 md:w-40">Same as contact person</h1>
                                         <div className={`w-16 h-8  rounded-full p-1 flex item-center transition-background ${isPassenger ? "bg-blue-300 justify-end" : "bg-gray-300 justify-start"}`}>
                                             <div className={`w-6 h-6 cursor-pointer rounded-full shadow-md shadow-black/50 transition-background ${isPassenger ? "bg-main" : "bg-white"}`} onClick={handlePassenger}></div>
                                         </div>
