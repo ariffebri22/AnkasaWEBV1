@@ -19,7 +19,7 @@ function payment() {
     return (
         <>
             <Navbar />
-            <div className="bg-main flex justify-center items-center">
+            <div className="bg-main flex justify-center items-center lg:h-screen">
                 <div className="bg-white w-[20rem] md:w-[40rem] mt-32 lg:mt-32 mb-12 flex flex-col lg:flex-row lg:w-[60rem] lg:gap-4 lg:justify-between p-4">
                     <div className="lg:w-1/2">
                         <h1 className="text-lg font-poppins text-abu font-semibold mb-2">Payment Method</h1>
@@ -148,4 +148,4 @@ function payment() {
     );
 }
 
-export default payment;
+export default protectedRoute(payment);
