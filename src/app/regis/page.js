@@ -10,7 +10,7 @@ import Head from "next/head";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-function regis() {
+function Regis() {
     const router = useRouter();
     const [eye, setEye] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -177,4 +177,4 @@ function regis() {
     );
 }
 
-export default regis;
+export default Regis;

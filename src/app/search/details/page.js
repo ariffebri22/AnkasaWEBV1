@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
-import { protectedRoute } from "../../../utils/privateRoute";
+import { privateRoute } from "../../../utils/privateRoute";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/high-res.css";
 import GarudaIndo from "../../../../public/image/maskapaigarudaindo.png";
 import countryData from "../../../data/countryData";
 
-function details() {
+function Details() {
     const router = useRouter();
     const [isFlightPayment, setIsFlightPayment] = useState(true);
     const [isPassenger, setIsPassenger] = useState(false);
@@ -250,4 +250,4 @@ function details() {
     );
 }
 
-export default protectedRoute(details);
+export default privateRoute(Details);

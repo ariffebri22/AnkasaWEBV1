@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { protectedRoute } from "../../utils/privateRoute";
+import { ProtectedRoute } from "../../utils/privateRoute";
 import ImgProfile from "../../../public/image/ImgProfile.jpeg";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
-function profile() {
+function Profile() {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState("MyProfile");
 
@@ -251,7 +251,7 @@ function profile() {
                             <div>
                                 <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
                                     <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">Monday, July, 20 '22 - 09:00</h1>
+                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
                                         <div className="flex mt-2 gap-4">
                                             <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -280,7 +280,7 @@ function profile() {
 
                                 <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
                                     <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">Monday, July, 20 '22 - 09:00</h1>
+                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
                                         <div className="flex mt-2 gap-4">
                                             <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -309,7 +309,7 @@ function profile() {
 
                                 <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
                                     <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">Monday, July, 20 '22 - 09:00</h1>
+                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
                                         <div className="flex mt-2 gap-4">
                                             <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -337,7 +337,7 @@ function profile() {
                                 </div>
                                 <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
                                     <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">Monday, July, 20 '22 - 09:00</h1>
+                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
                                         <div className="flex mt-2 gap-4">
                                             <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -366,7 +366,7 @@ function profile() {
 
                                 <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
                                     <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">Monday, July, 20 '22 - 09:00</h1>
+                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
                                         <div className="flex mt-2 gap-4">
                                             <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -411,4 +411,4 @@ function profile() {
     );
 }
 
-export default protectedRoute(profile);
+export default protectedRoute(Profile);

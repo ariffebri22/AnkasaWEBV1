@@ -4,8 +4,10 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
-export function protectedRoute(Component) {
-    return (props) => {
+export function privateRoute(Component) {
+    const displayName = `PrivateRoute(${Component.displayName || Component.name || "Component"})`;
+
+    const PrivateComponent = (props) => {
         const router = useRouter();
         useEffect(() => {
             const token = Cookies.get("token");
@@ -15,12 +17,16 @@ export function protectedRoute(Component) {
                     text: "Please log in first to continue",
                     icon: "warning",
                 }).then((confirm) => {
-                    if (confirm) {
+                    if (confirm.isConfirmed) {
                         router.push("/login");
                     }
                 });
             }
         }, []);
+
         return <Component {...props} />;
     };
+
+    PrivateComponent.displayName = displayName;
+    return PrivateComponent;
 }

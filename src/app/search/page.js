@@ -4,13 +4,13 @@ import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import RangeSlider from "../../components/RangeSlider";
-import { protectedRoute } from "../../utils/privateRoute";
+import { privateRoute } from "../../utils/privateRoute";
 import { useRouter } from "next/navigation";
 import AirAsia from "../../../public/image/maskapaiairasia.png";
 import GarudaIndo from "../../../public/image/maskapaigarudaindo.png";
 import LionAir from "../../../public/image/maskapailionair.png";
 
-function search() {
+function Search() {
     const router = useRouter();
     const [openTransit, setOpenTransit] = useState(false);
     const [openFacilities, setOpenFacilities] = useState(false);
@@ -1249,4 +1249,4 @@ function search() {
     );
 }
 
-export default protectedRoute(search);
+export default privateRoute(Search);

@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../../../components/Navbar";
 import Footer from "../../../../components/Footer";
-import { protectedRoute } from "../../../../utils/privateRoute";
+import { privateRoute } from "../../../../utils/privateRoute";
 import paypal from "../../../../../public/image/LogoPaypal.svg";
 import visa from "../../../../../public/image/logovisa.png";
 import mastercard from "../../../../../public/image/logomc.png";
 import stripe from "../../../../../public/image/logostripe.png";
 
-function payment() {
+function Payment() {
     const router = useRouter();
 
     const handleSelect = () => {
@@ -148,4 +148,4 @@ function payment() {
     );
 }
 
-export default protectedRoute(payment);
+export default privateRoute(Payment);

@@ -256,7 +256,7 @@ export default function Navbar() {
                         <div className="bg-slate-100 w-custom h-height mt-14 rounded-lg p-6 fixed right-24 lg:right-32 z-50 shadow-lg shadow-black/50 overflow-y-scroll">
                             <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between">
                                 <div className="">
-                                    <h1 className="font-poppins text-little mt-1">Monday, July, 20 '22 - 09:00</h1>
+                                    <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
                                     <div className="flex mt-2 gap-4">
                                         <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -283,7 +283,7 @@ export default function Navbar() {
                             </div>
                             <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                 <div className="">
-                                    <h1 className="font-poppins text-little mt-1">Sunday, August, 20 '22 - 11:00</h1>
+                                    <h1 className="font-poppins text-little mt-1">{`Sunday, August, 20 '22 - 11:00`}</h1>
                                     <div className="flex mt-2 gap-4">
                                         <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -310,7 +310,7 @@ export default function Navbar() {
                             </div>
                             <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                 <div className="">
-                                    <h1 className="font-poppins text-little mt-1">Tuesday, January, 20 '21 - 03:00</h1>
+                                    <h1 className="font-poppins text-little mt-1">{`Tuesday, January, 20 '21 - 03:00`}</h1>
                                     <div className="flex mt-2 gap-4">
                                         <h1 className="font-poppins text-md font-semibold">ENG</h1>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -337,7 +337,7 @@ export default function Navbar() {
                             </div>
                             <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                 <div className="">
-                                    <h1 className="font-poppins text-little mt-1">Friday, March, 9 '21 - 23:00</h1>
+                                    <h1 className="font-poppins text-little mt-1">{`Friday, March, 9 '21 - 23:00`}</h1>
                                     <div className="flex mt-2 gap-4">
                                         <h1 className="font-poppins text-md font-semibold">BRA</h1>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -364,7 +364,7 @@ export default function Navbar() {
                             </div>
                             <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                 <div className="">
-                                    <h1 className="font-poppins text-little mt-1">Sunday, June, 32 '19 - 19:00</h1>
+                                    <h1 className="font-poppins text-little mt-1">{`Sunday, June, 32 '19 - 19:00`}</h1>
                                     <div className="flex mt-2 gap-4">
                                         <h1 className="font-poppins text-md font-semibold">UEA</h1>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -391,7 +391,7 @@ export default function Navbar() {
                             </div>
                             <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                 <div className="">
-                                    <h1 className="font-poppins text-little mt-1">Monday, December, 20 '18 - 01:00</h1>
+                                    <h1 className="font-poppins text-little mt-1">{`Monday, December, 20 '18 - 01:00`}</h1>
                                     <div className="flex mt-2 gap-4">
                                         <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -624,7 +624,7 @@ export default function Navbar() {
                                     <div className="bg-slate-200 w-full h-96 mt-3 rounded-md px-1 py-2 overflow-y-scroll ">
                                         <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between">
                                             <div className="">
-                                                <h1 className="font-poppins text-little mt-1">Monday, July, 20 '22 - 09:00</h1>
+                                                <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
                                                 <div className="flex mt-2 gap-4">
                                                     <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -651,7 +651,7 @@ export default function Navbar() {
                                         </div>
                                         <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                             <div className="">
-                                                <h1 className="font-poppins text-little mt-1">Sunday, August, 20 '22 - 11:00</h1>
+                                                <h1 className="font-poppins text-little mt-1">{`Sunday, August, 20 '22 - 11:00`}</h1>
                                                 <div className="flex mt-2 gap-4">
                                                     <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -678,7 +678,7 @@ export default function Navbar() {
                                         </div>
                                         <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                             <div className="">
-                                                <h1 className="font-poppins text-little mt-1">Tuesday, January, 20 '21 - 03:00</h1>
+                                                <h1 className="font-poppins text-little mt-1">{`Tuesday, January, 20 '21 - 03:00`}</h1>
                                                 <div className="flex mt-2 gap-4">
                                                     <h1 className="font-poppins text-md font-semibold">ENG</h1>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -705,7 +705,7 @@ export default function Navbar() {
                                         </div>
                                         <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                             <div className="">
-                                                <h1 className="font-poppins text-little mt-1">Friday, March, 9 '21 - 23:00</h1>
+                                                <h1 className="font-poppins text-little mt-1">{`Friday, March, 9 '21 - 23:00`}</h1>
                                                 <div className="flex mt-2 gap-4">
                                                     <h1 className="font-poppins text-md font-semibold">BRA</h1>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -732,7 +732,7 @@ export default function Navbar() {
                                         </div>
                                         <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                             <div className="">
-                                                <h1 className="font-poppins text-little mt-1">Sunday, June, 32 '19 - 19:00</h1>
+                                                <h1 className="font-poppins text-little mt-1">{`Sunday, June, 32 '19 - 19:00`}</h1>
                                                 <div className="flex mt-2 gap-4">
                                                     <h1 className="font-poppins text-md font-semibold">UEA</h1>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -759,7 +759,7 @@ export default function Navbar() {
                                         </div>
                                         <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between mt-4">
                                             <div className="">
-                                                <h1 className="font-poppins text-little mt-1">Monday, December, 20 '18 - 01:00</h1>
+                                                <h1 className="font-poppins text-little mt-1">{`Monday, December, 20 '18 - 01:00`}</h1>
                                                 <div className="flex mt-2 gap-4">
                                                     <h1 className="font-poppins text-md font-semibold">IDN</h1>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">

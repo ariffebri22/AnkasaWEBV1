@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../../../../components/Navbar";
 import Footer from "../../../../../components/Footer";
-import { protectedRoute } from "../../../../../utils/privateRoute";
+import { privateRoute } from "../../../../../utils/privateRoute";
 import GarudaIndo from "../../../../../../public/image/maskapaigarudaindo.png";
 import QrCode from "../../../../../../public/image/qrcode.png";
 
-function pass() {
+function Pass() {
     const router = useRouter();
     const [tab, setTab] = useState(false);
 
@@ -122,7 +122,7 @@ function pass() {
                             </div>
                             <div className="mt-1">
                                 <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Departure</h1>
-                                <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">Monday, 20 July '20 -12:33</h1>
+                                <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{`Monday, 20 July '20 -12:33`}</h1>
                             </div>
                         </div>
                         <div className="w-1/3 border-l-2 border-dashed border-gray-300">
@@ -146,4 +146,4 @@ function pass() {
     );
 }
 
-export default pass;
+export default privateRoute(Pass);

@@ -9,7 +9,7 @@ import illustrasi2 from "../../../public/image/illustrationankasa.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function login() {
+export default function Login() {
     const router = useRouter();
     const [eye, setEye] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -125,7 +125,7 @@ export default function login() {
                         </form>
                         <hr className="border-t-1 border-abu mt-8" />
                         <div className="mt-4 flex flex-col justify-center items-center">
-                            <h1 className="font-poppins text-sm text-abu">Don't have an account yet?</h1>
+                            <h1 className="font-poppins text-sm text-abu">{`Don't have an account yet?`}</h1>
                         </div>
                         <a href="/regis" className="mt-4 w-full h-12 bg-white border-main border-2 rounded-lg flex justify-center items-center hover:bg-slate-200 cursor-pointer">
                             <h1 className="text-main font-poppins text-md font-semibold ">Sign Up</h1>
