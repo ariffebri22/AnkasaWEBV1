@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { ProtectedRoute } from "../../utils/privateRoute";
+import { privateRoute } from "../../utils/privateRoute";
 import ImgProfile from "../../../public/image/ImgProfile.jpeg";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
@@ -411,4 +411,4 @@ function Profile() {
     );
 }
 
-export default protectedRoute(Profile);
+export default privateRoute(Profile);
