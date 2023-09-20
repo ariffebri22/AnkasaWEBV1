@@ -103,7 +103,7 @@ function Payment() {
                         <div>
                             <div className="border-b h-12 flex justify-between items-center px-4">
                                 <div>
-                                    <select name="title" className=" focus:outline-none font-poppins font-semibold text-xs md:text-base">
+                                    <select name="title" className=" focus:outline-none font-poppins font-semibold text-xs md:text-base bg-white outline-none border-none">
                                         <option value={"Pro(Billed Monthly)"}>Pro(Billed Monthly)</option>
                                         <option value={"Base"}>Base</option>
                                     </select>

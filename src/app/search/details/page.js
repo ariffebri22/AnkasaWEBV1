@@ -112,7 +112,7 @@ function Details() {
                                     <label htmlFor="title" className="pl-4 text-gray-400 font-poppins font-medium">
                                         Title
                                     </label>
-                                    <select name="title" className="w-24 focus:outline-none p-4 font-poppins font-semibold text-md">
+                                    <select name="title" className="w-24 focus:outline-none p-4 font-poppins font-semibold text-md bg-white outline-none border-none">
                                         <option value={"Mr."}>Mr.</option>
                                         <option value={"Mr."}>Ms.</option>
                                     </select>
@@ -127,7 +127,7 @@ function Details() {
                                     <label htmlFor="country" className="pl-4 text-gray-400 font-poppins font-medium">
                                         Country
                                     </label>
-                                    <select name="country" className="w-full focus:outline-none p-4 font-poppins font-semibold text-md" value={selectedCountry} onChange={handleCountryChange}>
+                                    <select name="country" className="w-full focus:outline-none p-4 font-poppins font-semibold text-md bg-white outline-none border-none" value={selectedCountry} onChange={handleCountryChange}>
                                         {countryData.map((country) => (
                                             <option key={country.code} value={country.name}>
                                                 {country.name}
