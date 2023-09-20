@@ -816,7 +816,7 @@ function Search() {
                     </div>
                 </div>
             </div>
-            <div className="hidden md:flex w-full bg-white ">
+            <div className="md:flex w-full bg-white ">
                 <Footer />
             </div>
         </div>
