@@ -62,9 +62,9 @@ export default function Login() {
                 <div className="hidden lg:flex w-1/2 bg-main justify-center items-center">
                     <Image src={illustrasi1} width={400} alt="ankasa" />
                 </div>
-                <div className=" w-screen h-screen lg:w-1/2 relative">
-                    <div className="container  px-16 md:px-32 md:mx-auto">
-                        <div className="flex items-center mt-5 md:mt-6">
+                <div className="w-screen  h-screen lg:w-1/2 relative">
+                    <div className="container px-16 md:px-32 md:mx-auto h-height">
+                        <div className="flex items-center mt-5 md:mt-6 ">
                             <Image src={ankasa} alt="ankasa" />
                             <h1 className="font-poppins font-bold text-abu text-lg ml-1">Ankasa</h1>
                         </div>
@@ -74,7 +74,7 @@ export default function Login() {
                         <div className=" flex md:hidden justify-center mt-2 lg:hidden">
                             <Image src={illustrasi2} width={100} alt="ankasa" />
                         </div>
-                        <form className="mt-5 lg:mt-20" onSubmit={handleSubmit}>
+                        <form className="mt-5 flex flex-col lg:mt-20 " onSubmit={handleSubmit}>
                             <h1 className="font-poppins text-3xl font-bold">Login</h1>
                             <div className="border-b-4 border-b-gray-200 mt-8">
                                 <input type="email" className="w-full h-10 focus:outline-none p-4 font-poppins font-medium text-md text-abu" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -124,11 +124,11 @@ export default function Login() {
                             </button>
                         </form>
                         <hr className="border-t-1 border-abu mt-8" />
-                        <div className="mt-4 flex flex-col justify-center items-center">
+                        <div className="mt-4 flex flex-col justify-center items-center ">
                             <h1 className="font-poppins text-sm text-abu">{`Don't have an account yet?`}</h1>
                         </div>
-                        <a href="/regis" className="mt-4 w-full h-12 bg-white border-main border-2 rounded-lg flex justify-center items-center hover:bg-slate-200 cursor-pointer">
-                            <h1 className="text-main font-poppins text-md font-semibold ">Sign Up</h1>
+                        <a href="/regis" className="mt-4 w-full h-12 bg-white text-main font-poppins text-md font-semibold border-main border-2 rounded-lg flex justify-center items-center hover:bg-main hover:text-white cursor-pointer">
+                            Sign Up
                         </a>
                     </div>
                 </div>

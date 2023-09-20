@@ -167,8 +167,8 @@ function Regis() {
                         <div className="mt-4 flex flex-col justify-center items-center">
                             <h1 className="font-poppins text-sm text-abu">Already have an account?</h1>
                         </div>
-                        <a href="/login" className="mt-4 w-full h-12 bg-white border-main border-2 rounded-lg flex justify-center items-center hover:bg-slate-200 cursor-pointer">
-                            <h1 className="text-main font-poppins text-md font-semibold ">Sign In</h1>
+                        <a href="/login" className="mt-4 w-full h-12 bg-white text-main font-poppins text-md font-semibold border-main border-2 rounded-lg flex justify-center items-center hover:bg-main hover:text-white cursor-pointer">
+                            Sign In
                         </a>
                     </div>
                 </div>

@@ -129,7 +129,7 @@ export default function Navbar() {
 
     return (
         <>
-            <header className="w-full fixed z-50 top-0">
+            <header className="w-screen fixed z-50 top-0">
                 <div className="bg-white py-4 lg:px-28 max-w-7xl mx-auto flex px-5 justify-between">
                     <div className="flex items-center">
                         <Image src={ankasa} alt="ankasa" onClick={handleHome} className="cursor-pointer" />
