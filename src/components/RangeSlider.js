@@ -2,11 +2,11 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import "./style.css";
 
-const RangeSlider = ({ min, max, onChange }) => {
-    const [minVal, setMinVal] = useState(min);
-    const [maxVal, setMaxVal] = useState(max);
-    const minValRef = useRef(min);
-    const maxValRef = useRef(max);
+const RangeSlider = ({ min, max, value = { min: min, max: max }, onChange }) => {
+    const [minVal, setMinVal] = useState(value.min);
+    const [maxVal, setMaxVal] = useState(value.max);
+    const minValRef = useRef(value.min);
+    const maxValRef = useRef(value.max);
     const range = useRef(null);
 
     const getPercent = useCallback((value) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
