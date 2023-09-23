@@ -9,6 +9,7 @@ import RangeSlider from "../../components/RangeSlider";
 import { privateRoute } from "../../utils/privateRoute";
 import { useRouter } from "next/navigation";
 import airplaneLoading from "../../../public/image/airplane.gif";
+import notfoundFlight from "../../../public/image/notfoundFlight.png";
 
 function Search() {
     const router = useRouter();
@@ -643,7 +644,8 @@ function Search() {
                         <div>
                             {filteredData.length === 0 ? (
                                 <div className="flex flex-col justify-center items-center mt-32">
-                                    <p className="text-main">Penerbangan tidak ditemukan</p>
+                                    <Image src={notfoundFlight} width={100} alt="NotFoundFlight" />
+                                    <p className="text-abu text-lg font-poppins font-semibold">Flight not found</p>
                                 </div>
                             ) : (
                                 filteredData.map((flight, index) => (
@@ -679,7 +681,7 @@ function Search() {
                                                 <div className="flex flex-col md:flex-row-reverse w-20 md:w-full gap-1  md:justify-between md:items-center">
                                                     <div
                                                         className="bg-main hidden md:w-28 md:h-10 w-20 h-8 rounded-lg md:flex justify-center items-center hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50"
-                                                        onClick={handleSelect}
+                                                        onClick={() => router.push(`/search/details/${flight.code}`)}
                                                     >
                                                         <h1 className="text-white font-poppins font-medium text-sm">Select</h1>
                                                     </div>
@@ -754,7 +756,10 @@ function Search() {
                                                         </svg>
                                                     )}
                                                 </div>
-                                                <div className="bg-main md:hidden w-20 h-8 rounded-lg flex justify-center items-center hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50" onClick={handleSelect}>
+                                                <div
+                                                    className="bg-main md:hidden w-20 h-8 rounded-lg flex justify-center items-center hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50"
+                                                    onClick={() => router.push(`/search/details/${flight.code}`)}
+                                                >
                                                     <h1 className="text-white font-poppins font-medium text-sm">Select</h1>
                                                 </div>
                                             </div>

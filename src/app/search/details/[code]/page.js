@@ -1,20 +1,69 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import axios from "axios";
 import Image from "next/image";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/Footer";
-import { privateRoute } from "../../../utils/privateRoute";
+import Navbar from "../../../../components/Navbar";
+import Footer from "../../../../components/Footer";
+import { privateRoute } from "../../../../utils/privateRoute";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/high-res.css";
-import GarudaIndo from "../../../../public/image/maskapaigarudaindo.png";
-import countryData from "../../../data/countryData";
+import countryData from "../../../../data/countryData";
 
 function Details() {
     const router = useRouter();
+    const params = useParams();
+    const code = params.code;
     const [isFlightPayment, setIsFlightPayment] = useState(true);
     const [isPassenger, setIsPassenger] = useState(false);
-    const [selectedCountry, setSelectedCountry] = useState("Indonesia"); // Default negara
+    const [selectedCountry, setSelectedCountry] = useState("Indonesia");
+    const [isFlightData, setIsFlightData] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`${process.env.NEXT_PUBLIC_API_URL}airlines/flight/${code}`)
+            .then((response) => {
+                const data = response.data.data;
+
+                const flight = data;
+                const takeoffTime = flight.takeoff.substr(11, 5);
+                const landingTime = flight.landing.substr(11, 5);
+                const takeoffDate = flight.takeoff.substr(0, 10);
+                const landingDate = flight.landing.substr(0, 10);
+
+                const takeoffHour = parseInt(takeoffTime.split(":")[0]);
+                const takeoffMinute = parseInt(takeoffTime.split(":")[1]);
+                const landingHour = parseInt(landingTime.split(":")[0]);
+                const landingMinute = parseInt(landingTime.split(":")[1]);
+
+                const hours = landingHour - takeoffHour;
+                const minutes = landingMinute - takeoffMinute;
+
+                const formattedTimeDistance = `${hours} hours ${minutes} minutes`;
+
+                const takeoffDateTime = new Date(takeoffDate);
+                const landingDateTime = new Date(landingDate);
+                const options = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+                const formattedTakeoffDate = takeoffDateTime.toLocaleDateString("en-US", options);
+                const formattedLandingDate = landingDateTime.toLocaleDateString("en-US", options);
+
+                const modifiedData = {
+                    ...flight,
+                    takeoffTime,
+                    landingTime,
+                    takeoffDate: formattedTakeoffDate,
+                    landingDate: formattedLandingDate,
+                    timeDistance: formattedTimeDistance,
+                };
+
+                setIsFlightData(modifiedData);
+            })
+            .catch((error) => {
+                console.error("Error fetching data: ", error);
+            });
+    }, []);
+
+    console.log(isFlightData);
 
     const handleCountryChange = (event) => {
         setSelectedCountry(event.target.value);
@@ -145,7 +194,7 @@ function Details() {
                                 <div className="flex w-full justify-between items-center border-b pb-2">
                                     <div className="flex items-center gap-2">
                                         <input type="checkbox" name="insurance" id="insurance" className=" form-checkbox h-4 w-4 accent-main text-blue-600 border-blue-400 transition duration-150 ease-in-out rounded-lg" />
-                                        <label for="insurance" className="text-base font-poppins font-medium">
+                                        <label htmlFor="insurance" className="text-base font-poppins font-medium">
                                             Travel Insurance
                                         </label>
                                     </div>
@@ -174,30 +223,32 @@ function Details() {
                                 <div className="">
                                     <div className={`overflow-hidden transition-max-height duration-700 ease-in-out ${isFlightPayment ? "max-h-[300px]" : "max-h-0"}`}>
                                         <div className="flex items-center gap-2">
-                                            <Image src={GarudaIndo} alt="GarudaIndonesia" width={90} />
-                                            <h1 className="font-poppins font-medium text-abu">Garuda Indonesia</h1>
+                                            <Image src={isFlightData.photo} alt="GarudaIndonesia" width={90} height={60} />
+                                            <h1 className="font-poppins font-medium text-abu">{isFlightData.name}</h1>
                                         </div>
-                                        <div className="flex gap-3 mt-4 items-center md:w-44 md:justify-between">
-                                            <h1 className="font-poppins font-semibold text-md">Medan (IDN)</h1>
-                                            <div className="">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18" fill="none">
-                                                    <path
-                                                        d="M18.5559 15.6H0.475875C0.213001 15.6 8.45316e-05 15.8685 8.45316e-05 16.2V17.4C8.45316e-05 17.7315 0.213001 18 0.475875 18H18.5559C18.8188 18 19.0317 17.7315 19.0317 17.4V16.2C19.0317 15.8685 18.8188 15.6 18.5559 15.6ZM2.39539 11.5977C2.58214 11.8542 2.84442 11.9997 3.11889 11.9993L7.00074 11.9926C7.30709 11.9921 7.60904 11.9006 7.88215 11.7256L16.5344 6.1888C17.3296 5.67993 18.0424 4.95357 18.5274 4.00221C19.0718 2.93423 19.131 2.16136 18.916 1.61537C18.7016 1.069 18.1803 0.66776 17.1838 0.586011C16.2962 0.513263 15.4133 0.808008 14.6181 1.3165L11.6888 3.1911L5.18531 0.113894C5.10711 0.0474663 5.01627 0.00858352 4.92216 0.00126566C4.82806 -0.0060522 4.73412 0.0184604 4.65004 0.0722692L2.69484 1.32363C2.37755 1.5265 2.30083 2.06049 2.5411 2.39348L7.1866 6.07218L4.11746 8.0364L1.96599 6.6688C1.89187 6.62167 1.80999 6.59718 1.72698 6.59731C1.64397 6.59744 1.56215 6.62219 1.48812 6.66955L0.294777 7.43341C-0.015676 7.63216 -0.0974525 8.1504 0.129143 8.48639L2.39539 11.5977Z"
-                                                        fill="#979797"
-                                                    />
-                                                </svg>
+                                        {isFlightData && isFlightData.from && isFlightData.to && (
+                                            <div className="flex gap-3 mt-4 items-center md:w-48 lg:w-72 bg-orange-200 md:justify-between">
+                                                <h1 className="font-poppins font-semibold text-md">{isFlightData.from.location}</h1>
+                                                <div className="">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18" fill="none">
+                                                        <path
+                                                            d="M18.5559 15.6H0.475875C0.213001 15.6 8.45316e-05 15.8685 8.45316e-05 16.2V17.4C8.45316e-05 17.7315 0.213001 18 0.475875 18H18.5559C18.8188 18 19.0317 17.7315 19.0317 17.4V16.2C19.0317 15.8685 18.8188 15.6 18.5559 15.6ZM2.39539 11.5977C2.58214 11.8542 2.84442 11.9997 3.11889 11.9993L7.00074 11.9926C7.30709 11.9921 7.60904 11.9006 7.88215 11.7256L16.5344 6.1888C17.3296 5.67993 18.0424 4.95357 18.5274 4.00221C19.0718 2.93423 19.131 2.16136 18.916 1.61537C18.7016 1.069 18.1803 0.66776 17.1838 0.586011C16.2962 0.513263 15.4133 0.808008 14.6181 1.3165L11.6888 3.1911L5.18531 0.113894C5.10711 0.0474663 5.01627 0.00858352 4.92216 0.00126566C4.82806 -0.0060522 4.73412 0.0184604 4.65004 0.0722692L2.69484 1.32363C2.37755 1.5265 2.30083 2.06049 2.5411 2.39348L7.1866 6.07218L4.11746 8.0364L1.96599 6.6688C1.89187 6.62167 1.80999 6.59718 1.72698 6.59731C1.64397 6.59744 1.56215 6.62219 1.48812 6.66955L0.294777 7.43341C-0.015676 7.63216 -0.0974525 8.1504 0.129143 8.48639L2.39539 11.5977Z"
+                                                            fill="#979797"
+                                                        />
+                                                    </svg>
+                                                </div>
+                                                <h1 className="font-poppins font-semibold text-md">{isFlightData.to.location}</h1>
                                             </div>
-                                            <h1 className="font-poppins font-semibold text-md">Tokyo (JPN)</h1>
-                                        </div>
+                                        )}
                                         <div className="flex gap-2 items-center mt-4 mb-2">
-                                            <h1 className=" font-poppins text-xs font-base text-gray-500">Monday, 20 July 20</h1>
+                                            <h1 className=" font-poppins text-xs font-base text-gray-500">{isFlightData.takeoffDate}</h1>
                                             <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                                            <h1 className=" font-poppins text-xs font-base text-gray-500">12:33 - 15-21</h1>
+                                            <h1 className=" font-poppins text-xs font-base text-gray-500">{`${isFlightData.takeoffTime} - ${isFlightData.landingTime}`}</h1>
                                         </div>
                                         <div className="mt-4 mb-2">
                                             <div className="flex items-center gap-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                    <circle cx="10" cy="10" r="9.25" fill="white" stroke="#2395FF" stroke-width="1.5" />
+                                                    <circle cx="10" cy="10" r="9.25" fill="white" stroke="#2395FF" strokeWidth="1.5" />
                                                     <path
                                                         d="M14.4238 7.20523C14.1553 6.93171 13.72 6.93159 13.4513 7.20486L8.43755 12.3097L6.17367 10.0047C5.90503 9.73141 5.46966 9.73157 5.20122 10.0051C4.93278 10.2786 4.93295 10.7219 5.20159 10.9952L7.95151 13.795C8.21999 14.0683 8.65516 14.0683 8.9236 13.795L14.4234 8.19533C14.692 7.92202 14.6922 7.47875 14.4238 7.20523Z"
                                                         fill="#2395FF"
@@ -207,7 +258,7 @@ function Details() {
                                             </div>
                                             <div className="flex items-center gap-2 mt-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                    <circle cx="10" cy="10" r="9.25" fill="white" stroke="#2395FF" stroke-width="1.5" />
+                                                    <circle cx="10" cy="10" r="9.25" fill="white" stroke="#2395FF" strokeWidth="1.5" />
                                                     <path
                                                         d="M14.4238 7.20523C14.1553 6.93171 13.72 6.93159 13.4513 7.20486L8.43755 12.3097L6.17367 10.0047C5.90503 9.73141 5.46966 9.73157 5.20122 10.0051C4.93278 10.2786 4.93295 10.7219 5.20159 10.9952L7.95151 13.795C8.21999 14.0683 8.65516 14.0683 8.9236 13.795L14.4234 8.19533C14.692 7.92202 14.6922 7.47875 14.4238 7.20523Z"
                                                         fill="#2395FF"
