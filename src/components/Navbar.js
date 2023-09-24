@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import Image from "next/image";
+import axios from "axios";
 import ankasa from "../../public/image/IconAnkasa.svg";
 import search from "../../public/image/search.svg";
 import burger1 from "../../public/image/buger1.png";
