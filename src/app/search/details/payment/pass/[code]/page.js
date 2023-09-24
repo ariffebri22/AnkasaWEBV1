@@ -175,7 +175,7 @@ function Pass() {
                                     <h1 className="font-poppins font-bold md:text-2xl">{dataTicket?.result?.ticket?.to?.code}</h1>
                                 </div>
                             </div>
-                            <div className="flex justify-between items-center mt-2 md:mt-6 md:w-72">
+                            <div className="flex justify-between items-center mt-2 md:w-72">
                                 <div>
                                     <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Code</h1>
                                     <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{`${dataTicket?.result?.ticket?.from?.code.substr(0, 2)}-${dataTicket?.result?.id}`}</h1>
