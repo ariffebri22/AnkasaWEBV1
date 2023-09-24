@@ -1,16 +1,87 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
-import Navbar from "../../../../../components/Navbar";
-import Footer from "../../../../../components/Footer";
-import { privateRoute } from "../../../../../utils/privateRoute";
-import GarudaIndo from "../../../../../../public/image/maskapaigarudaindo.png";
-import QrCode from "../../../../../../public/image/qrcode.png";
+import axios from "axios";
+import Cookies from "js-cookie";
+import Navbar from "../../../../../../components/Navbar";
+import Footer from "../../../../../../components/Footer";
+import { privateRoute } from "../../../../../../utils/privateRoute";
+import GarudaIndo from "../../../../../../../public/image/maskapaigarudaindo.png";
+import QrCode from "../../../../../../../public/image/qrcode.png";
+
+const token = Cookies.get("token");
 
 function Pass() {
     const router = useRouter();
+    const params = useParams();
+    const code = params.code;
     const [tab, setTab] = useState(false);
+    const [dataTicket, setDataTicket] = useState("");
+
+    useEffect(() => {
+        axios
+            .get(`${process.env.NEXT_PUBLIC_API_URL}booking/tickets/${code}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                const data = response.data.data;
+                // console.log(data);
+
+                const flight = data.result.ticket;
+                const takeoffTime = flight.takeoff.substr(11, 5);
+                const landingTime = flight.landing.substr(11, 5);
+                const takeoffDate = flight.takeoff.substr(0, 10);
+                const landingDate = flight.landing.substr(0, 10);
+
+                const takeoffHour = parseInt(takeoffTime.split(":")[0]);
+                const takeoffMinute = parseInt(takeoffTime.split(":")[1]);
+                const landingHour = parseInt(landingTime.split(":")[0]);
+                const landingMinute = parseInt(landingTime.split(":")[1]);
+
+                const hours = landingHour - takeoffHour;
+                const minutes = landingMinute - takeoffMinute;
+
+                const formattedTimeDistance = `${hours} hours ${minutes} minutes`;
+
+                const takeoffDateTime = new Date(takeoffDate);
+                const landingDateTime = new Date(landingDate);
+                const options = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+                const formattedTakeoffDate = takeoffDateTime.toLocaleDateString("en-US", options);
+                const formattedLandingDate = landingDateTime.toLocaleDateString("en-US", options);
+
+                const modifiedData = {
+                    ...data,
+                    takeoffTime,
+                    landingTime,
+                    takeoffDate: formattedTakeoffDate,
+                    landingDate: formattedLandingDate,
+                    timeDistance: formattedTimeDistance,
+                };
+
+                setDataTicket(modifiedData);
+            })
+            .catch((error) => {
+                console.error("Error fetching data: ", error);
+            });
+    }, []);
+
+    console.log(dataTicket);
+
+    const dataClass = () => {
+        const price = dataTicket?.result?.ticket?.price;
+        let result = "";
+
+        if (price <= 200) {
+            return (result = "Economy");
+        } else if (price >= 200) {
+            return (result = "Business");
+        } else if (price >= 500) {
+            return (result = "First Class");
+        }
+    };
 
     const handleTab = () => {
         if (tab) {
@@ -41,7 +112,7 @@ function Pass() {
                         <div className="bg-white w-36 rounded-lg py-2 px-4 right-6 fixed md:right-16 lg:right-72 z-50 shadow-lg shadow-black/50 md:flex flex-col items-center">
                             <button className=" w-full flex items-center h-10  mt=4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 15 15" fill="none">
-                                    <g clip-path="url(#clip0_323_676)">
+                                    <g clipPath="url(#clip0_323_676)">
                                         <path
                                             d="M3 1.5C3 1.10218 3.15804 0.720644 3.43934 0.43934C3.72064 0.158035 4.10218 0 4.5 0L10.5 0C10.8978 0 11.2794 0.158035 11.5607 0.43934C11.842 0.720644 12 1.10218 12 1.5V5H3V1.5ZM1.5 6C1.10218 6 0.720644 6.15804 0.43934 6.43934C0.158035 6.72064 0 7.10218 0 7.5L0 11.5C0 11.8978 0.158035 12.2794 0.43934 12.5607C0.720644 12.842 1.10218 13 1.5 13H2V9H13V13H13.5C13.8978 13 14.2794 12.842 14.5607 12.5607C14.842 12.2794 15 11.8978 15 11.5V7.5C15 7.10218 14.842 6.72064 14.5607 6.43934C14.2794 6.15804 13.8978 6 13.5 6H1.5Z"
                                             fill="#979797"
@@ -81,10 +152,10 @@ function Pass() {
                     <div className="w-full h-48 md:h-[18rem] border-gray-300 border-2 rounded-xl mt-2 md:p-4 p-2 flex">
                         <div className="w-2/3 mr-2">
                             <div className="flex justify-between md:w-96">
-                                <Image src={GarudaIndo} width={70} alt="GarudaIndo" className="md:hidden" />
-                                <Image src={GarudaIndo} width={200} alt="GarudaIndo" className="hidden md:block" />
+                                <Image src={dataTicket?.result?.ticket?.airline?.photo} width={60} height={30} alt="GarudaIndo" className="md:hidden" />
+                                <Image src={dataTicket?.result?.ticket?.airline?.photo} width={120} height={60} alt="GarudaIndo" className="hidden md:block" />
                                 <div className="flex items-center justify-between  w-full px-2 md:ml-8">
-                                    <h1 className="font-poppins font-bold md:text-2xl">IDN</h1>
+                                    <h1 className="font-poppins font-bold md:text-2xl">{dataTicket?.result?.ticket?.from?.code}</h1>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none" className="md:hidden">
                                         <path
                                             d="M17.5497 14.7334H0.450071C0.201451 14.7334 7.9948e-05 14.9869 7.9948e-05 15.3V16.4333C7.9948e-05 16.7464 0.201451 17 0.450071 17H17.5497C17.7984 17 17.9997 16.7464 17.9997 16.4333V15.3C17.9997 14.9869 17.7984 14.7334 17.5497 14.7334ZM2.26551 10.9534C2.44213 11.1957 2.69019 11.3331 2.94977 11.3327L6.62114 11.3263C6.91088 11.3258 7.19645 11.2395 7.45475 11.0742L15.6378 5.84498C16.3899 5.36438 17.064 4.67837 17.5227 3.77987C18.0377 2.77121 18.0937 2.04129 17.8903 1.52563C17.6876 1.00962 17.1945 0.630663 16.2521 0.553455C15.4126 0.484748 14.5776 0.763119 13.8255 1.24336L11.055 3.01381L4.90414 0.107566C4.83019 0.0448293 4.74427 0.00810666 4.65527 0.00119535C4.56627 -0.00571596 4.47742 0.0174349 4.3979 0.0682542L2.54872 1.25009C2.24863 1.44169 2.17607 1.94602 2.40332 2.26051L6.79692 5.73484L3.89419 7.58993L1.85939 6.29831C1.78928 6.2538 1.71185 6.23067 1.63334 6.23079C1.55483 6.23092 1.47744 6.25429 1.40743 6.29902L0.278793 7.02044C-0.014826 7.20815 -0.0921683 7.6976 0.12214 8.01493L2.26551 10.9534Z"
@@ -97,32 +168,32 @@ function Pass() {
                                             fill="#979797"
                                         />
                                     </svg>
-                                    <h1 className="font-poppins font-bold md:text-2xl">JPN</h1>
+                                    <h1 className="font-poppins font-bold md:text-2xl">{dataTicket?.result?.ticket?.to?.code}</h1>
                                 </div>
                             </div>
                             <div className="flex justify-between items-center mt-2 md:mt-6 md:w-72">
                                 <div>
                                     <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Code</h1>
-                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">AB-221</h1>
+                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{`${dataTicket?.result?.ticket?.from?.code.substr(0, 2)}-${dataTicket?.result?.id}`}</h1>
                                 </div>
                                 <div>
                                     <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Class</h1>
-                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">Economy</h1>
+                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{dataClass()}</h1>
                                 </div>
                             </div>
                             <div className="flex items-center mt-2 md:w-72 ">
                                 <div className="">
                                     <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Terminal</h1>
-                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">A</h1>
+                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{dataTicket?.result?.ticket?.from?.terminal.substr(8, 8)}</h1>
                                 </div>
                                 <div className=" ml-20 pl-3 md:ml-32 md:pl-2">
                                     <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Gate</h1>
-                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">221</h1>
+                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{dataTicket?.result?.id}</h1>
                                 </div>
                             </div>
                             <div className="mt-1">
                                 <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Departure</h1>
-                                <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{`Monday, 20 July '20 -12:33`}</h1>
+                                <h1 className="text-xs font-poppins text-abu font-medium md:text-lg">{`${dataTicket.takeoffDate} - ${dataTicket.takeoffTime}`}</h1>
                             </div>
                         </div>
                         <div className="w-1/3 border-l-2 border-dashed border-gray-300">

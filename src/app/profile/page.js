@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import Head from "next/head";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/high-res.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { privateRoute } from "../../utils/privateRoute";
@@ -12,7 +13,7 @@ import Cookies from "js-cookie";
 
 function Profile() {
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState("MyProfile");
+    const [activeTab, setActiveTab] = useState("MyBooking");
 
     const handleTabClick = (tabName) => {
         setActiveTab(tabName);
@@ -203,7 +204,8 @@ function Profile() {
                                         </div>
                                         <div className="border-b-4 border-b-gray-200 mt-4">
                                             <h1 className="pl-4 text-gray-400 font-poppins font-medium">Phone Number</h1>
-                                            <input type="text" className="w-full h-10 focus:outline-none p-4 font-poppins font-medium text-md text-abu" placeholder="Phone Number" />
+                                            <PhoneInput country={"id"} containerClass="p-4 border-b focus:border-primary" inputStyle={{ border: "none", width: "100%" }} buttonStyle={{ border: "none", backgroundColor: "white" }} />
+                                            {/* <input type="text" className="w-full h-10 focus:outline-none p-4 font-poppins font-medium text-md text-abu" placeholder="Phone Number" /> */}
                                         </div>
                                     </div>
                                 </div>

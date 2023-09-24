@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 import Navbar from "../../../../components/Navbar";
 import Footer from "../../../../components/Footer";
 import { privateRoute } from "../../../../utils/privateRoute";
@@ -10,14 +12,29 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/high-res.css";
 import countryData from "../../../../data/countryData";
 
+const token = Cookies.get("token");
+
 function Details() {
     const router = useRouter();
     const params = useParams();
     const code = params.code;
     const [isFlightPayment, setIsFlightPayment] = useState(true);
-    const [isPassenger, setIsPassenger] = useState(false);
-    const [selectedCountry, setSelectedCountry] = useState("Indonesia");
+    const [isPassenger, setIsPassenger] = useState(true);
+    const [insurance, setInsurance] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [selectedCountry1, setSelectedCountry1] = useState("Indonesia");
+    const [selectedCountry2, setSelectedCountry2] = useState("Indonesia");
     const [isFlightData, setIsFlightData] = useState([]);
+    const [contactPerson, setContactPerson] = useState({
+        title1: "Mr.",
+        fullname1: "",
+        nationality1: "",
+    });
+    const [passengerDetails, setPassengerDetails] = useState({
+        title2: "",
+        fullname2: "",
+        nationality2: "",
+    });
 
     useEffect(() => {
         axios
@@ -63,10 +80,72 @@ function Details() {
             });
     }, []);
 
-    console.log(isFlightData);
+    const handleProceed = () => {
+        let isValid = true;
+        setLoading(true);
 
-    const handleCountryChange = (event) => {
-        setSelectedCountry(event.target.value);
+        if (!contactPerson.fullname1 || !selectedCountry1) {
+            Swal.fire("Please fill in all fields", "To continue, please fill in all fields correctly", "warning");
+            isValid = false;
+            console.log("di data 1");
+            console.log(contactPerson.fullname1);
+            console.log(selectedCountry1);
+            setLoading(false);
+        }
+
+        if (isPassenger && (!passengerDetails.title2 || !passengerDetails.fullname2 || !selectedCountry2)) {
+            Swal.fire("Please fill in all fields", "To continue, please fill in all fields correctly", "warning");
+            isValid = false;
+            console.log("di data 2");
+            setLoading(false);
+        }
+
+        if (isValid) {
+            const postData = {
+                title1: contactPerson.title1,
+                fullname1: contactPerson.fullname1,
+                nationality1: selectedCountry1,
+                title2: isPassenger ? passengerDetails.title2 : contactPerson.title1,
+                fullname2: isPassenger ? passengerDetails.fullname2 : contactPerson.fullname1,
+                nationality2: isPassenger ? selectedCountry2 : selectedCountry1,
+            };
+
+            axios
+                .post(`${process.env.NEXT_PUBLIC_API_URL}booking/tickets/${code}`, postData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    console.log("Response from API:", response.data);
+
+                    const responseData = response.data.data;
+                    const responseCode = responseData.code;
+
+                    if (responseCode) {
+                        setTimeout(() => {
+                            router.push(`/search/details/payment/${responseCode}`);
+                            setLoading(false);
+                        }, 2000);
+                    } else {
+                        console.error("API response does not contain code.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error sending data to API:", error);
+                    setLoading(false);
+                });
+        }
+    };
+
+    // console.log(isFlightData);
+
+    const handleCountryChange1 = (event) => {
+        setSelectedCountry1(event.target.value);
+    };
+
+    const handleCountryChange2 = (event) => {
+        setSelectedCountry2(event.target.value);
     };
 
     const handleOpenDropdown = (state, setState) => {
@@ -81,8 +160,16 @@ function Details() {
         }
     };
 
+    const handleInsurance = () => {
+        if (insurance) {
+            setInsurance(false);
+        } else {
+            setInsurance(true);
+        }
+    };
+
     const handleSelect = () => {
-        router.push("/search/details/payment");
+        router.push(`/search/details/payment/${code}`);
     };
 
     return (
@@ -118,7 +205,14 @@ function Details() {
                                     <label htmlFor="name" className="pl-4 text-gray-400 font-poppins font-medium">
                                         Fullname
                                     </label>
-                                    <input type="text" name="name" className="w-full h-10 focus:outline-none p-4 font-poppins font-semibold text-md " placeholder="Fullname" />
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        className="w-full h-10 focus:outline-none p-4 font-poppins font-semibold text-md"
+                                        placeholder="Fullname"
+                                        value={contactPerson.fullname1}
+                                        onChange={(e) => setContactPerson({ ...contactPerson, fullname1: e.target.value })}
+                                    />
                                 </div>
                                 <div className="border-b-4 border-b-gray-200 mt-4">
                                     <label htmlFor="email" className="pl-4 text-gray-400 font-poppins font-medium">
@@ -127,10 +221,16 @@ function Details() {
                                     <input type="email" name="email" className="w-full h-10 focus:outline-none p-4 font-poppins font-semibold text-md " placeholder="Email" />
                                 </div>
                                 <div className="border-b-4 border-b-gray-200 mt-4">
-                                    <label htmlFor="phone" className="pl-4 text-gray-400 font-poppins font-medium">
-                                        Phone Number
+                                    <label htmlFor="country1" className="pl-4 text-gray-400 font-poppins font-medium">
+                                        Country
                                     </label>
-                                    <PhoneInput country={"id"} containerClass="p-4 border-b focus:border-primary" inputStyle={{ border: "none", width: "100%" }} buttonStyle={{ border: "none", backgroundColor: "white" }} />
+                                    <select name="country1" className="w-full focus:outline-none p-4 font-poppins font-semibold text-md bg-white outline-none border-none" value={selectedCountry1} onChange={handleCountryChange1}>
+                                        {countryData.map((country) => (
+                                            <option key={country.code} value={country.name}>
+                                                {country.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="w-full bg-red-100 h-10 mt-4 flex justify-center md:justify-start px-4 items-center gap-2 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -161,22 +261,42 @@ function Details() {
                                     <label htmlFor="title" className="pl-4 text-gray-400 font-poppins font-medium">
                                         Title
                                     </label>
-                                    <select name="title" className="w-24 focus:outline-none p-4 font-poppins font-semibold text-md bg-white outline-none border-none">
+                                    <select
+                                        name="title"
+                                        className="w-24 focus:outline-none p-4 font-poppins font-semibold text-md bg-white outline-none border-none"
+                                        disabled={isPassenger}
+                                        value={passengerDetails.title2}
+                                        onChange={(e) => setPassengerDetails({ ...passengerDetails, title2: e.target.value })}
+                                    >
                                         <option value={"Mr."}>Mr.</option>
-                                        <option value={"Mr."}>Ms.</option>
+                                        <option value={"Ms."}>Ms.</option>
                                     </select>
                                 </div>
                                 <div className="border-b-4 border-b-gray-200 mt-4">
                                     <label htmlFor="name" className="pl-4 text-gray-400 font-poppins font-medium">
                                         Fullname
                                     </label>
-                                    <input type="text" name="name" className="w-full h-10 focus:outline-none p-4 font-poppins font-semibold text-md " placeholder="Fullname" />
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        className="w-full h-10 focus:outline-none p-4 font-poppins font-semibold text-md"
+                                        placeholder="Fullname"
+                                        disabled={isPassenger}
+                                        value={passengerDetails.fullname2}
+                                        onChange={(e) => setPassengerDetails({ ...passengerDetails, fullname2: e.target.value })}
+                                    />
                                 </div>
                                 <div className="border-b-4 border-b-gray-200 mt-4 flex flex-col">
                                     <label htmlFor="country" className="pl-4 text-gray-400 font-poppins font-medium">
                                         Country
                                     </label>
-                                    <select name="country" className="w-full focus:outline-none p-4 font-poppins font-semibold text-md bg-white outline-none border-none" value={selectedCountry} onChange={handleCountryChange}>
+                                    <select
+                                        name="country"
+                                        className="w-full focus:outline-none p-4 font-poppins font-semibold text-md bg-white outline-none border-none"
+                                        value={selectedCountry2}
+                                        onChange={handleCountryChange2}
+                                        disabled={isPassenger}
+                                    >
                                         {countryData.map((country) => (
                                             <option key={country.code} value={country.name}>
                                                 {country.name}
@@ -193,7 +313,13 @@ function Details() {
                             <div className="w-full bg-white rounded-xl mt-4 p-4">
                                 <div className="flex w-full justify-between items-center border-b pb-2">
                                     <div className="flex items-center gap-2">
-                                        <input type="checkbox" name="insurance" id="insurance" className=" form-checkbox h-4 w-4 accent-main text-blue-600 border-blue-400 transition duration-150 ease-in-out rounded-lg" />
+                                        <input
+                                            type="checkbox"
+                                            name="insurance"
+                                            id="insurance"
+                                            className=" form-checkbox h-4 w-4 accent-main text-blue-600 border-blue-400 transition duration-150 ease-in-out rounded-lg"
+                                            onClick={handleInsurance}
+                                        />
                                         <label htmlFor="insurance" className="text-base font-poppins font-medium">
                                             Travel Insurance
                                         </label>
@@ -208,8 +334,19 @@ function Details() {
                             </div>
                         </div>
                         <div className="hidden md:flex items-center justify-center">
-                            <div className="flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 my-6" onClick={handleSelect}>
-                                <h1 className="text-white text-sm font-medium">Proceed to Payment</h1>
+                            <div className="flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 my-6" onClick={handleProceed} disabled={loading}>
+                                {loading ? (
+                                    <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 4.418 3.582 8 8 8v-4zm10-1.732A7.965 7.965 0 0120 12h4c0-6.627-5.373-12-12-12v4zm-2 7.423V24c4.418 0 8-3.582 8-8h-4c0 3.27-1.316 6.271-3.464 8.451z"
+                                        ></path>
+                                    </svg>
+                                ) : (
+                                    <h1 className="text-white text-sm font-medium">Proceed to Payment</h1>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -227,7 +364,7 @@ function Details() {
                                             <h1 className="font-poppins font-medium text-abu">{isFlightData.name}</h1>
                                         </div>
                                         {isFlightData && isFlightData.from && isFlightData.to && (
-                                            <div className="flex gap-3 mt-4 items-center md:w-48 lg:w-72 bg-orange-200 md:justify-between">
+                                            <div className="flex gap-3 mt-4 items-center md:w-48 lg:w-72 md:justify-between">
                                                 <h1 className="font-poppins font-semibold text-md">{isFlightData.from.location}</h1>
                                                 <div className="">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18" fill="none">
@@ -274,7 +411,9 @@ function Details() {
                                     >
                                         <p className="font-poppins text-base font-semibold -z-50">Total Payment</p>
                                         <div className="flex items-center gap-2">
-                                            <h1 className="text-main font-poppins font-semibold text-lg">$ 145,00</h1>
+                                            <h1 className="text-main font-poppins font-semibold text-lg">
+                                                {!isPassenger ? `$ ${insurance ? isFlightData.price * 2 + 2 : isFlightData.price * 2},00` : `$ ${insurance ? isFlightData.price + 2 : isFlightData.price},00`}
+                                            </h1>
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="15"
@@ -289,8 +428,19 @@ function Details() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="md:hidden flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 my-6" onClick={handleSelect}>
-                                <h1 className="text-white text-sm font-medium">Proceed to Payment</h1>
+                            <div className="md:hidden flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 my-6" onClick={handleProceed} disabled={loading}>
+                                {loading ? (
+                                    <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 4.418 3.582 8 8 8v-4zm10-1.732A7.965 7.965 0 0120 12h4c0-6.627-5.373-12-12-12v4zm-2 7.423V24c4.418 0 8-3.582 8-8h-4c0 3.27-1.316 6.271-3.464 8.451z"
+                                        ></path>
+                                    </svg>
+                                ) : (
+                                    <h1 className="text-white text-sm font-medium">Proceed to Payment</h1>
+                                )}
                             </div>
                         </div>
                     </div>

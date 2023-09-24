@@ -1,21 +1,71 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
-import Navbar from "../../../../components/Navbar";
-import Footer from "../../../../components/Footer";
-import { privateRoute } from "../../../../utils/privateRoute";
-import paypal from "../../../../../public/image/LogoPaypal.svg";
-import visa from "../../../../../public/image/logovisa.png";
-import mastercard from "../../../../../public/image/logomc.png";
-import stripe from "../../../../../public/image/logostripe.png";
+import axios from "axios";
+import Swal from "sweetalert2";
+import Navbar from "../../../../../components/Navbar";
+import Footer from "../../../../../components/Footer";
+import { privateRoute } from "../../../../../utils/privateRoute";
+import paypal from "../../../../../../public/image/LogoPaypal.svg";
+import visa from "../../../../../../public/image/logovisa.png";
+import mastercard from "../../../../../../public/image/logomc.png";
+import stripe from "../../../../../../public/image/logostripe.png";
 
 function Payment() {
     const router = useRouter();
+    const params = useParams();
+    const code = params.code;
+    const [loading, setLoading] = useState(false);
 
-    const handleSelect = () => {
-        router.push("/search/details/payment/pass");
+    const handleConfirm = async () => {
+        console.log("Confirm button clicked");
+        try {
+            setLoading(true);
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}booking/status/${code}`, { statusId: 2 });
+            if (response.status === 200) {
+                router.push(`/search/details/payment/pass/${code}`);
+            } else {
+                console.error("Failed to confirm payment.");
+            }
+        } catch (error) {
+            console.error("Error confirming payment:", error);
+        } finally {
+            setLoading(false);
+        }
     };
+
+    const handleCancel = async () => {
+        try {
+            const confirmationResult = await Swal.fire({
+                title: "Confirm",
+                text: "Are you sure you want to cancel the payment?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#F24545",
+                cancelButtonColor: "#979797",
+                confirmButtonText: "Yes, cancel",
+            });
+
+            if (confirmationResult.isConfirmed) {
+                setLoading(true);
+
+                const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}booking/status/${code}`, { statusId: 3 });
+
+                if (response.status === 200) {
+                    await Swal.fire("Canceled", "Your payment has been canceled.", "success");
+                    router.push(`/profile`);
+                } else {
+                    console.error("Failed to cancel payment.");
+                }
+            }
+        } catch (error) {
+            console.error("Error canceling payment:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -134,10 +184,23 @@ function Payment() {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center items-center">
-                                <div className="flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 mt-6" onClick={handleSelect}>
-                                    <h1 className="text-white text-sm font-medium">Try it free for 30 days</h1>
+                                <div className="flex w-full md:w-60 h-14  bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50 mt-6" onClick={handleConfirm}>
+                                    {loading ? (
+                                        <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 4.418 3.582 8 8 8v-4zm10-1.732A7.965 7.965 0 0120 12h4c0-6.627-5.373-12-12-12v4zm-2 7.423V24c4.418 0 8-3.582 8-8h-4c0 3.27-1.316 6.271-3.464 8.451z"
+                                            ></path>
+                                        </svg>
+                                    ) : (
+                                        <h1 className="text-white text-sm font-medium">Confirm</h1>
+                                    )}
                                 </div>
-                                <h1 className="font-poppins text-main text-xs underline mt-2 text-center">Have a promo code?</h1>
+                                <div className="font-poppins text-red-400 text-sm underline mt-4 font-medium text-center cursor-pointer" onClick={handleCancel}>
+                                    Cancel?
+                                </div>
                             </div>
                         </div>
                     </div>

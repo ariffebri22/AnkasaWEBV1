@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
+import Cookies from "js-cookie";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import RangeSlider from "../../components/RangeSlider";
@@ -13,6 +14,7 @@ import notfoundFlight from "../../../public/image/notfoundFlight.png";
 
 function Search() {
     const router = useRouter();
+    const token = Cookies.get("token");
     const [openTransit, setOpenTransit] = useState(false);
     const [openFacilities, setOpenFacilities] = useState(false);
     const [openDepTime, setOpenDepTime] = useState(false);
