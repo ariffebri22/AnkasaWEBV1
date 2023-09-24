@@ -21,6 +21,8 @@ function Search() {
     const [openAriveTime, setOpenAriveTime] = useState(false);
     const [openAirlines, setOpenAirlines] = useState(false);
     const [openTicketPrice, setOpenTicketPrice] = useState(false);
+    const [openFrom, setOpenFrom] = useState(false);
+    const [openTo, setOpenTo] = useState(false);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [flightData, setFlightData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +60,33 @@ function Search() {
         singaporeAirlines: false,
         Citylink: false,
     });
+
+    const [filtersFrom, setFiltersFrom] = useState({
+        "New York, USA": false,
+        "London, UK": false,
+        "Paris, France": false,
+        "Sydney, Australia": false,
+        "Tokyo, Japan": false,
+        "Bali, Indonesia": false,
+        "Jakarta, Indonesia": false,
+        "Singapore, Singapore": false,
+        "Kuala Lumpur, Malaysia": false,
+        "Medan, Indonesia": false,
+    });
+
+    const [filtersTo, setFiltersTo] = useState({
+        "New York, USA": false,
+        "London, UK": false,
+        "Paris, France": false,
+        "Sydney, Australia": false,
+        "Tokyo, Japan": false,
+        "Bali, Indonesia": false,
+        "Jakarta, Indonesia": false,
+        "Singapore, Singapore": false,
+        "Kuala Lumpur, Malaysia": false,
+        "Medan, Indonesia": false,
+    });
+
     const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
     const [priceRangeMobile, setPriceRangeMobile] = useState({ min: 0, max: 1000 });
 
@@ -157,6 +186,20 @@ function Search() {
         }));
     };
 
+    const toggleFilterFrom = (filterName) => {
+        setFiltersFrom((prevFilters) => ({
+            ...prevFilters,
+            [filterName]: !prevFilters[filterName],
+        }));
+    };
+
+    const toggleFilterTo = (filterName) => {
+        setFiltersTo((prevFilters) => ({
+            ...prevFilters,
+            [filterName]: !prevFilters[filterName],
+        }));
+    };
+
     // data filter
 
     const filteredData = sortedFlightData.filter((flight) => {
@@ -227,6 +270,70 @@ function Search() {
             }
         }
 
+        if (
+            !filtersFrom["New York, USA"] &&
+            !filtersFrom["London, UK"] &&
+            !filtersFrom["Paris, France"] &&
+            !filtersFrom["Sydney, Australia"] &&
+            !filtersFrom["Tokyo, Japan"] &&
+            !filtersFrom["Bali, Indonesia"] &&
+            !filtersFrom["Jakarta, Indonesia"] &&
+            !filtersFrom["Singapore, Singapore"] &&
+            !filtersFrom["Kuala Lumpur, Malaysia"] &&
+            !filtersFrom["Medan, Indonesia"]
+        ) {
+        } else {
+            const selectedFrom = [];
+
+            if (filtersFrom["New York, USA"]) selectedFrom.push("New York, USA");
+            if (filtersFrom["London, UK"]) selectedFrom.push("London, UK");
+            if (filtersFrom["Paris, France"]) selectedFrom.push("Paris, France");
+            if (filtersFrom["Sydney, Australia"]) selectedFrom.push("Sydney, Australia");
+            if (filtersFrom["Tokyo, Japan"]) selectedFrom.push("Tokyo, Japan");
+            if (filtersFrom["Bali, Indonesia"]) selectedFrom.push("Bali, Indonesia");
+            if (filtersFrom["Jakarta, Indonesia"]) selectedFrom.push("Jakarta, Indonesia");
+            if (filtersFrom["Singapore, Singapore"]) selectedFrom.push("Singapore");
+            if (filtersFrom["Kuala Lumpur, Malaysia"]) selectedFrom.push("Kuala Lumpur, Malaysia");
+            if (filtersFrom["Medan, Indonesia"]) selectedFrom.push("Medan, Indonesia");
+
+            if (!selectedFrom.includes(flight.from.location)) {
+                isFlightMatched = false;
+            }
+
+            // console.log(flight.from.country);
+        }
+
+        if (
+            !filtersTo["New York, USA"] &&
+            !filtersTo["London, UK"] &&
+            !filtersTo["Paris, France"] &&
+            !filtersTo["Sydney, Australia"] &&
+            !filtersTo["Tokyo, Japan"] &&
+            !filtersTo["Bali, Indonesia"] &&
+            !filtersTo["Jakarta, Indonesia"] &&
+            !filtersTo["Singapore, Singapore"] &&
+            !filtersTo["Kuala Lumpur, Malaysia"] &&
+            !filtersTo["Medan, Indonesia"]
+        ) {
+        } else {
+            const selectedTo = [];
+
+            if (filtersTo["New York, USA"]) selectedTo.push("New York, USA");
+            if (filtersTo["London, UK"]) selectedTo.push("London, UK");
+            if (filtersTo["Paris, France"]) selectedTo.push("Paris, France");
+            if (filtersTo["Sydney, Australia"]) selectedTo.push("Sydney, Australia");
+            if (filtersTo["Tokyo, Japan"]) selectedTo.push("Tokyo, Japan");
+            if (filtersTo["Bali, Indonesia"]) selectedTo.push("Bali, Indonesia");
+            if (filtersTo["Jakarta, Indonesia"]) selectedTo.push("Jakarta, Indonesia");
+            if (filtersTo["Singapore, Singapore"]) selectedTo.push("Singapore");
+            if (filtersTo["Kuala Lumpur, Malaysia"]) selectedTo.push("Kuala Lumpur, Malaysia");
+            if (filtersTo["Medan, Indonesia"]) selectedTo.push("Medan, Indonesia");
+
+            if (!selectedTo.includes(flight.to.location)) {
+                isFlightMatched = false;
+            }
+        }
+
         if (flight.price < priceRange.min || flight.price > priceRange.max) {
             return false;
         }
@@ -272,6 +379,30 @@ function Search() {
         });
         setPriceRange({ min: 0, max: 1000 });
         setPriceRangeMobile({ min: 0, max: 1000 });
+        setFiltersFrom({
+            "New York, USA": false,
+            "London, UK": false,
+            "Paris, France": false,
+            "Sydney, Australia": false,
+            "Tokyo, Japan": false,
+            "Bali, Indonesia": false,
+            "Jakarta, Indonesia": false,
+            "Singapore, Singapore": false,
+            "Kuala Lumpur, Malaysia": false,
+            "Medan, Indonesia": false,
+        });
+        setFiltersTo({
+            "New York, USA": false,
+            "London, UK": false,
+            "Paris, France": false,
+            "Sydney, Australia": false,
+            "Tokyo, Japan": false,
+            "Bali, Indonesia": false,
+            "Jakarta, Indonesia": false,
+            "Singapore, Singapore": false,
+            "Kuala Lumpur, Malaysia": false,
+            "Medan, Indonesia": false,
+        });
     };
 
     return (
@@ -296,43 +427,21 @@ function Search() {
                         </svg>
                     </div>
                     <div className="container mx-auto flex md:justify-between md:items-center ">
-                        <div className=" px-6 flex flex-col md:flex-row md:w-full  md:gap-4 items-center">
+                        <div className=" px-6 flex flex-col md:flex-row md:w-full md:gap-4 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 50 35" fill="none" className="md:hidden">
                                 <path
                                     d="M6.29307 32.9371C6.78369 33.6656 7.47274 34.0788 8.19382 34.0777L18.3921 34.0586C19.1969 34.0571 19.9901 33.7973 20.7076 33.3003L43.4385 17.576C45.5275 16.1308 47.4001 14.068 48.6743 11.3661C50.1047 8.3331 50.2602 6.1382 49.6954 4.5876C49.1321 3.03594 47.7626 1.89642 45.1447 1.66425C42.8127 1.45765 40.4932 2.29472 38.4042 3.73882L30.7082 9.06261L13.6226 0.323454C13.4172 0.134803 13.1785 0.0243769 12.9313 0.00359444C12.6841 -0.017188 12.4373 0.052427 12.2164 0.205242L7.07978 3.75905C6.2462 4.3352 6.04464 5.85172 6.67588 6.79742L18.8803 17.2448L10.8172 22.8231L5.16497 18.9392C4.97023 18.8053 4.75514 18.7358 4.53706 18.7361C4.31898 18.7365 4.10401 18.8068 3.90952 18.9413L0.774426 21.1106C-0.0411833 21.6751 -0.256023 23.1469 0.339278 24.1011L6.29307 32.9371Z"
                                     fill="white"
                                 />
                             </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 50 35" fill="none" className="hidden md:block mb-4 z-30">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 50 35" fill="none" className="hidden md:block z-30">
                                 <path
                                     d="M6.29307 32.9371C6.78369 33.6656 7.47274 34.0788 8.19382 34.0777L18.3921 34.0586C19.1969 34.0571 19.9901 33.7973 20.7076 33.3003L43.4385 17.576C45.5275 16.1308 47.4001 14.068 48.6743 11.3661C50.1047 8.3331 50.2602 6.1382 49.6954 4.5876C49.1321 3.03594 47.7626 1.89642 45.1447 1.66425C42.8127 1.45765 40.4932 2.29472 38.4042 3.73882L30.7082 9.06261L13.6226 0.323454C13.4172 0.134803 13.1785 0.0243769 12.9313 0.00359444C12.6841 -0.017188 12.4373 0.052427 12.2164 0.205242L7.07978 3.75905C6.2462 4.3352 6.04464 5.85172 6.67588 6.79742L18.8803 17.2448L10.8172 22.8231L5.16497 18.9392C4.97023 18.8053 4.75514 18.7358 4.53706 18.7361C4.31898 18.7365 4.10401 18.8068 3.90952 18.9413L0.774426 21.1106C-0.0411833 21.6751 -0.256023 23.1469 0.339278 24.1011L6.29307 32.9371Z"
                                     fill="white"
                                 />
                             </svg>
-                            <div className="z-20">
-                                <div className="flex justify-between items-end gap-6">
-                                    <div>
-                                        <h1 className="text-white font-poppins text-xs">From</h1>
-                                        <h1 className="text-white font-poppins text-lg font-medium">Medan (IDN)</h1>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" className="mb-1">
-                                        <path
-                                            d="M16.6888 4.69033L13.8123 7.56688C13.6048 7.77437 13.3329 7.8781 13.0609 7.8781C12.789 7.8781 12.5171 7.77437 12.3096 7.56688C11.8947 7.15194 11.8947 6.47922 12.3096 6.06428L13.3724 5.00154H2.23291C1.64611 5.00154 1.17041 4.52584 1.17041 3.93904C1.17041 3.35225 1.64611 2.87654 2.23291 2.87654H13.3724L12.3096 1.81381C11.8947 1.39887 11.8947 0.726144 12.3096 0.311205C12.7246 -0.103735 13.3973 -0.103735 13.8123 0.311205L16.6888 3.18776C17.1037 3.60266 17.1037 4.27542 16.6888 4.69033ZM14.186 11.9984H3.62761L4.69037 10.9357C5.10528 10.5208 5.10528 9.84804 4.69037 9.4331C4.2754 9.01816 3.60271 9.01816 3.18773 9.4331L0.31118 12.3097C-0.103727 12.7246 -0.103727 13.3973 0.31118 13.8123L3.18773 16.6888C3.39522 16.8963 3.66712 17 3.93905 17C4.21099 17 4.48289 16.8963 4.69037 16.6888C5.10528 16.2739 5.10528 15.6011 4.69037 15.1862L3.62761 14.1235H14.186C14.7728 14.1235 15.2485 13.6478 15.2485 13.061C15.2485 12.4742 14.7728 11.9984 14.186 11.9984Z"
-                                            fill="white"
-                                        />
-                                    </svg>
-                                    <div className="flex flex-col items-end">
-                                        <h1 className="text-white font-poppins text-xs">To</h1>
-                                        <h1 className="text-white font-poppins text-lg font-medium">Tokyo (JPN)</h1>
-                                    </div>
-                                </div>
-                                <div className="flex justify-between items-center mt-1 mb-2">
-                                    <h1 className="text-white font-poppins text-xs font-light">Monday, 20 July 20</h1>
-                                    <div className="w-1 h-1 bg-white rounded-full"></div>
-                                    <h1 className="text-white font-poppins text-xs font-light">6 Passenger</h1>
-                                    <div className="w-1 h-1 bg-white rounded-full"></div>
-                                    <h1 className="text-white font-poppins text-xs font-light">Economy</h1>
-                                </div>
+                            <div className="z-20 mt-3">
+                                <h1 className="font-poppins text-2xl font-bold text-white">Safe Flight With Us</h1>
                             </div>
                         </div>
                         <div className="hidden md:flex md:justify-center md:items-center md:w-48 md:h-full">
@@ -383,6 +492,159 @@ function Search() {
                 <div className="hidden lg:flex">
                     <div className=" bg-white w-72 left-0 py-4 px-6 rounded-xl mt-4">
                         <div className="">
+                            <div className="border-b">
+                                <button className="flex flex-row justify-between items-center w-full py-5 pr-[3px] transition-transform duration-500 ease-in-out transform-gpu" onClick={() => handleOpenDropdown(openFrom, setOpenFrom)}>
+                                    <p className="font-poppins text-base font-semibold -z-50">From</p>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 18 10"
+                                        fill="none"
+                                        className={`${openFrom ? "rotate-180" : "rotate-0"} transform transition-transform duration-500 ease-in-out`}
+                                    >
+                                        <path d="M16 1.07107L9.58769 7.43757C9.19577 7.82669 8.56034 7.82669 8.16841 7.43757L1.75609 1.07107" stroke="#2395FF" strokeWidth="3" />
+                                    </svg>
+                                </button>
+                                <div className={`overflow-hidden transition-max-height duration-500 ease-in-out ${openFrom ? "max-h-[500px]" : "max-h-0"}`}>
+                                    <div className="flex flex-col">
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="NewYork">
+                                                New York, USA
+                                            </label>
+                                            <input type="checkbox" name="" id="NewYork" className="w-4 h-4" checked={filtersFrom["New York, USA"]} onChange={() => toggleFilterFrom("New York, USA")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="London">
+                                                London, UK
+                                            </label>
+                                            <input type="checkbox" name="" id="London" className="w-4 h-4" checked={filtersFrom["London, UK"]} onChange={() => toggleFilterFrom("London, UK")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Paris">
+                                                Paris, France
+                                            </label>
+                                            <input type="checkbox" name="" id="Paris" className="w-4 h-4" checked={filtersFrom["Paris, France"]} onChange={() => toggleFilterFrom("Paris, France")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Sydney">
+                                                Sydney, Australia
+                                            </label>
+                                            <input type="checkbox" name="" id="Sydney" className="w-4 h-4" checked={filtersFrom["Sydney, Australia"]} onChange={() => toggleFilterFrom("Sydney, Australia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Tokyo">
+                                                Tokyo, Japan
+                                            </label>
+                                            <input type="checkbox" name="" id="Tokyo" className="w-4 h-4" checked={filtersFrom["Tokyo, Japan"]} onChange={() => toggleFilterFrom("Tokyo, Japan")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Bali">
+                                                Bali, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Bali" className="w-4 h-4" checked={filtersFrom["Bali, Indonesia"]} onChange={() => toggleFilterFrom("Bali, Indonesia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Jakarta">
+                                                Jakarta, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Jakarta" className="w-4 h-4" checked={filtersFrom["Jakarta, Indonesia"]} onChange={() => toggleFilterFrom("Jakarta, Indonesia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Singapore">
+                                                Singapore, Singapore
+                                            </label>
+                                            <input type="checkbox" name="" id="Singapore" className="w-4 h-4" checked={filtersFrom["Singapore, Singapore"]} onChange={() => toggleFilterFrom("Singapore, Singapore")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Kuala">
+                                                Kuala Lumpur, Malaysia
+                                            </label>
+                                            <input type="checkbox" name="" id="Kuala" className="w-4 h-4" checked={filtersFrom["Kuala Lumpur, Malaysia"]} onChange={() => toggleFilterFrom("Kuala Lumpur, Malaysia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Medan">
+                                                Medan, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Medan" className="w-4 h-4" checked={filtersFrom["Medan, Indonesia"]} onChange={() => toggleFilterFrom("Medan, Indonesia")} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="border-b">
+                                <button className="flex flex-row justify-between items-center w-full py-5 pr-[3px] transition-transform duration-500 ease-in-out transform-gpu" onClick={() => handleOpenDropdown(openTo, setOpenTo)}>
+                                    <p className="font-poppins text-base font-semibold -z-50">To</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 18 10" fill="none" className={`${openTo ? "rotate-180" : "rotate-0"} transform transition-transform duration-500 ease-in-out`}>
+                                        <path d="M16 1.07107L9.58769 7.43757C9.19577 7.82669 8.56034 7.82669 8.16841 7.43757L1.75609 1.07107" stroke="#2395FF" strokeWidth="3" />
+                                    </svg>
+                                </button>
+                                <div className={`overflow-hidden transition-max-height duration-500 ease-in-out ${openTo ? "max-h-[500px]" : "max-h-0"}`}>
+                                    <div className="flex flex-col">
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="NewYork">
+                                                New York, USA
+                                            </label>
+                                            <input type="checkbox" name="" id="NewYork" className="w-4 h-4" checked={filtersTo["New York, USA"]} onChange={() => toggleFilterTo("New York, USA")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="London">
+                                                London, UK
+                                            </label>
+                                            <input type="checkbox" name="" id="London" className="w-4 h-4" checked={filtersTo["London, UK"]} onChange={() => toggleFilterTo("London, UK")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Paris">
+                                                Paris, France
+                                            </label>
+                                            <input type="checkbox" name="" id="Paris" className="w-4 h-4" checked={filtersTo["Paris, France"]} onChange={() => toggleFilterTo("Paris, France")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Sydney">
+                                                Sydney, Australia
+                                            </label>
+                                            <input type="checkbox" name="" id="Sydney" className="w-4 h-4" checked={filtersTo["Sydney, Australia"]} onChange={() => toggleFilterTo("Sydney, Australia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Tokyo">
+                                                Tokyo, Japan
+                                            </label>
+                                            <input type="checkbox" name="" id="Tokyo" className="w-4 h-4" checked={filtersTo["Tokyo, Japan"]} onChange={() => toggleFilterTo("Tokyo, Japan")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Bali">
+                                                Bali, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Bali" className="w-4 h-4" checked={filtersTo["Bali, Indonesia"]} onChange={() => toggleFilterTo("Bali, Indonesia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Jakarta">
+                                                Jakarta, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Jakarta" className="w-4 h-4" checked={filtersTo["Jakarta, Indonesia"]} onChange={() => toggleFilterTo("Jakarta, Indonesia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Singapore">
+                                                Singapore, Singapore
+                                            </label>
+                                            <input type="checkbox" name="" id="Singapore" className="w-4 h-4" checked={filtersTo["Singapore, Singapore"]} onChange={() => toggleFilterTo("Singapore, Singapore")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Kuala">
+                                                Kuala Lumpur, Malaysia
+                                            </label>
+                                            <input type="checkbox" name="" id="Kuala" className="w-4 h-4" checked={filtersTo["Kuala Lumpur, Malaysia"]} onChange={() => toggleFilterTo("Kuala Lumpur, Malaysia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Medan">
+                                                Medan, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Medan" className="w-4 h-4" checked={filtersTo["Medan, Indonesia"]} onChange={() => toggleFilterTo("Medan, Indonesia")} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="border-b">
                                 <button className="flex flex-row justify-between items-center w-full py-5 pr-[3px] transition-transform duration-500 ease-in-out transform-gpu" onClick={() => handleOpenDropdown(openTransit, setOpenTransit)}>
                                     <p className="font-poppins text-base font-semibold -z-50">Transit</p>
@@ -598,7 +860,7 @@ function Search() {
                                         </div>
                                         <div className="flex flex-row justify-between w-full items-center mb-5">
                                             <label className="text-sm" htmlFor="Citylink">
-                                                Citylink
+                                                Citilink
                                             </label>
                                             <input type="checkbox" name="" id="Citylink" className="w-4 h-4" checked={filtersAirlines.Citylink} onChange={() => toggleFilterAirlines("Citylink")} />
                                         </div>
@@ -640,7 +902,7 @@ function Search() {
                     {isLoading ? (
                         <div className="flex flex-col justify-center items-center mt-32">
                             <Image src={airplaneLoading} alt="Loading" width={100} height={100} className="bg-slate-100" />
-                            <p className="text-main ">Loading...</p>
+                            <p className="text-main text-lg font-semibold">Loading...</p>
                         </div>
                     ) : (
                         <div>
@@ -790,7 +1052,160 @@ function Search() {
                                 </svg>
                             </div>
                         </div>
-                        <div className="overflow-y-scroll h-custom1 py-5">
+                        <div className="overflow-y-scroll h-[30rem] py-5">
+                            <div className="border-b">
+                                <button className="flex flex-row justify-between items-center w-full py-5 pr-[3px] transition-transform duration-500 ease-in-out transform-gpu" onClick={() => handleOpenDropdown(openFrom, setOpenFrom)}>
+                                    <p className="font-poppins text-base font-semibold -z-50">From</p>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 18 10"
+                                        fill="none"
+                                        className={`${openFrom ? "rotate-180" : "rotate-0"} transform transition-transform duration-500 ease-in-out`}
+                                    >
+                                        <path d="M16 1.07107L9.58769 7.43757C9.19577 7.82669 8.56034 7.82669 8.16841 7.43757L1.75609 1.07107" stroke="#2395FF" strokeWidth="3" />
+                                    </svg>
+                                </button>
+                                <div className={`overflow-hidden transition-max-height duration-500 ease-in-out ${openFrom ? "max-h-[500px]" : "max-h-0"}`}>
+                                    <div className="flex flex-col">
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="NewYork">
+                                                New York, USA
+                                            </label>
+                                            <input type="checkbox" name="" id="NewYork" className="w-4 h-4" checked={filtersFrom["New York, USA"]} onChange={() => toggleFilterFrom("New York, USA")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="London">
+                                                London, UK
+                                            </label>
+                                            <input type="checkbox" name="" id="London" className="w-4 h-4" checked={filtersFrom["London, UK"]} onChange={() => toggleFilterFrom("London, UK")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Paris">
+                                                Paris, France
+                                            </label>
+                                            <input type="checkbox" name="" id="Paris" className="w-4 h-4" checked={filtersFrom["Paris, France"]} onChange={() => toggleFilterFrom("Paris, France")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Sydney">
+                                                Sydney, Australia
+                                            </label>
+                                            <input type="checkbox" name="" id="Sydney" className="w-4 h-4" checked={filtersFrom["Sydney, Australia"]} onChange={() => toggleFilterFrom("Sydney, Australia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Tokyo">
+                                                Tokyo, Japan
+                                            </label>
+                                            <input type="checkbox" name="" id="Tokyo" className="w-4 h-4" checked={filtersFrom["Tokyo, Japan"]} onChange={() => toggleFilterFrom("Tokyo, Japan")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Bali">
+                                                Bali, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Bali" className="w-4 h-4" checked={filtersFrom["Bali, Indonesia"]} onChange={() => toggleFilterFrom("Bali, Indonesia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Jakarta">
+                                                Jakarta, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Jakarta" className="w-4 h-4" checked={filtersFrom["Jakarta, Indonesia"]} onChange={() => toggleFilterFrom("Jakarta, Indonesia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Singapore">
+                                                Singapore, Singapore
+                                            </label>
+                                            <input type="checkbox" name="" id="Singapore" className="w-4 h-4" checked={filtersFrom["Singapore, Singapore"]} onChange={() => toggleFilterFrom("Singapore, Singapore")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Kuala">
+                                                Kuala Lumpur, Malaysia
+                                            </label>
+                                            <input type="checkbox" name="" id="Kuala" className="w-4 h-4" checked={filtersFrom["Kuala Lumpur, Malaysia"]} onChange={() => toggleFilterFrom("Kuala Lumpur, Malaysia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Medan">
+                                                Medan, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Medan" className="w-4 h-4" checked={filtersFrom["Medan, Indonesia"]} onChange={() => toggleFilterFrom("Medan, Indonesia")} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="border-b">
+                                <button className="flex flex-row justify-between items-center w-full py-5 pr-[3px] transition-transform duration-500 ease-in-out transform-gpu" onClick={() => handleOpenDropdown(openTo, setOpenTo)}>
+                                    <p className="font-poppins text-base font-semibold -z-50">To</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 18 10" fill="none" className={`${openTo ? "rotate-180" : "rotate-0"} transform transition-transform duration-500 ease-in-out`}>
+                                        <path d="M16 1.07107L9.58769 7.43757C9.19577 7.82669 8.56034 7.82669 8.16841 7.43757L1.75609 1.07107" stroke="#2395FF" strokeWidth="3" />
+                                    </svg>
+                                </button>
+                                <div className={`overflow-hidden transition-max-height duration-500 ease-in-out ${openTo ? "max-h-[500px]" : "max-h-0"}`}>
+                                    <div className="flex flex-col">
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="NewYork">
+                                                New York, USA
+                                            </label>
+                                            <input type="checkbox" name="" id="NewYork" className="w-4 h-4" checked={filtersTo["New York, USA"]} onChange={() => toggleFilterTo("New York, USA")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="London">
+                                                London, UK
+                                            </label>
+                                            <input type="checkbox" name="" id="London" className="w-4 h-4" checked={filtersTo["London, UK"]} onChange={() => toggleFilterTo("London, UK")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Paris">
+                                                Paris, France
+                                            </label>
+                                            <input type="checkbox" name="" id="Paris" className="w-4 h-4" checked={filtersTo["Paris, France"]} onChange={() => toggleFilterTo("Paris, France")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Sydney">
+                                                Sydney, Australia
+                                            </label>
+                                            <input type="checkbox" name="" id="Sydney" className="w-4 h-4" checked={filtersTo["Sydney, Australia"]} onChange={() => toggleFilterTo("Sydney, Australia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Tokyo">
+                                                Tokyo, Japan
+                                            </label>
+                                            <input type="checkbox" name="" id="Tokyo" className="w-4 h-4" checked={filtersTo["Tokyo, Japan"]} onChange={() => toggleFilterTo("Tokyo, Japan")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Bali">
+                                                Bali, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Bali" className="w-4 h-4" checked={filtersTo["Bali, Indonesia"]} onChange={() => toggleFilterTo("Bali, Indonesia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Jakarta">
+                                                Jakarta, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Jakarta" className="w-4 h-4" checked={filtersTo["Jakarta, Indonesia"]} onChange={() => toggleFilterTo("Jakarta, Indonesia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Singapore">
+                                                Singapore, Singapore
+                                            </label>
+                                            <input type="checkbox" name="" id="Singapore" className="w-4 h-4" checked={filtersTo["Singapore, Singapore"]} onChange={() => toggleFilterTo("Singapore, Singapore")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Kuala">
+                                                Kuala Lumpur, Malaysia
+                                            </label>
+                                            <input type="checkbox" name="" id="Kuala" className="w-4 h-4" checked={filtersTo["Kuala Lumpur, Malaysia"]} onChange={() => toggleFilterTo("Kuala Lumpur, Malaysia")} />
+                                        </div>
+                                        <div className="flex flex-row justify-between w-full items-center mb-5">
+                                            <label className="text-sm font-poppins" htmlFor="Medan">
+                                                Medan, Indonesia
+                                            </label>
+                                            <input type="checkbox" name="" id="Medan" className="w-4 h-4" checked={filtersTo["Medan, Indonesia"]} onChange={() => toggleFilterTo("Medan, Indonesia")} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="border-b">
                                 <button className="flex flex-row justify-between items-center w-full py-5 pr-[3px] transition-transform duration-500 ease-in-out transform-gpu" onClick={() => handleOpenDropdown(openTransit, setOpenTransit)}>
                                     <p className="font-poppins text-base font-semibold">Transit</p>

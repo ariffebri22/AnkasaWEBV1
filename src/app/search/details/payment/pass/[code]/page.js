@@ -18,8 +18,10 @@ function Pass() {
     const code = params.code;
     const [tab, setTab] = useState(false);
     const [dataTicket, setDataTicket] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         axios
             .get(`${process.env.NEXT_PUBLIC_API_URL}booking/tickets/${code}`, {
                 headers: {
@@ -62,9 +64,11 @@ function Pass() {
                 };
 
                 setDataTicket(modifiedData);
+                setIsLoading(false);
             })
             .catch((error) => {
                 console.error("Error fetching data: ", error);
+                setIsLoading(false);
             });
     }, []);
 
@@ -181,14 +185,14 @@ function Pass() {
                                     <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{dataClass()}</h1>
                                 </div>
                             </div>
-                            <div className="flex items-center mt-2 md:w-72 ">
-                                <div className="">
+                            <div className="flex items-center mt-2 md:w-72">
+                                <div className="w-1/2">
                                     <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Terminal</h1>
-                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{dataTicket?.result?.ticket?.from?.terminal.substr(8, 8)}</h1>
+                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{dataTicket?.result?.ticket?.from?.terminal}</h1>
                                 </div>
-                                <div className=" ml-20 pl-3 md:ml-32 md:pl-2">
+                                <div className=" w-1/2 flex flex-col items-end mr-8 md:mr-10">
                                     <h1 className="text-xs font-poppins text-gray-400 md:text-base ">Gate</h1>
-                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg">{dataTicket?.result?.id}</h1>
+                                    <h1 className="text-sm font-poppins text-abu font-medium md:text-lg mr-3 md:mr-4">{dataTicket?.result?.id}</h1>
                                 </div>
                             </div>
                             <div className="mt-1">

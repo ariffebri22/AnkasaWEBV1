@@ -93,7 +93,7 @@ function Details() {
             setLoading(false);
         }
 
-        if (isPassenger && (!passengerDetails.title2 || !passengerDetails.fullname2 || !selectedCountry2)) {
+        if (!isPassenger && (!passengerDetails.title2 || !passengerDetails.fullname2 || !selectedCountry2)) {
             Swal.fire("Please fill in all fields", "To continue, please fill in all fields correctly", "warning");
             isValid = false;
             console.log("di data 2");
@@ -364,8 +364,10 @@ function Details() {
                                             <h1 className="font-poppins font-medium text-abu">{isFlightData.name}</h1>
                                         </div>
                                         {isFlightData && isFlightData.from && isFlightData.to && (
-                                            <div className="flex gap-3 mt-4 items-center md:w-48 lg:w-72 md:justify-between">
-                                                <h1 className="font-poppins font-semibold text-md">{isFlightData.from.location}</h1>
+                                            <div className="flex gap-6 mt-4 items-center md:justify-between">
+                                                <div className="w-20 lg:w-48">
+                                                    <h1 className="font-poppins font-semibold text-md">{isFlightData.from.location}</h1>
+                                                </div>
                                                 <div className="">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18" fill="none">
                                                         <path
@@ -374,7 +376,9 @@ function Details() {
                                                         />
                                                     </svg>
                                                 </div>
-                                                <h1 className="font-poppins font-semibold text-md">{isFlightData.to.location}</h1>
+                                                <div className="w-20 lg:w-48">
+                                                    <h1 className="font-poppins font-semibold text-md">{isFlightData.to.location}</h1>
+                                                </div>
                                             </div>
                                         )}
                                         <div className="flex gap-2 items-center mt-4 mb-2">

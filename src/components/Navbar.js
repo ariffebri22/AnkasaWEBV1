@@ -11,6 +11,10 @@ import back from "../../public/image/btnback.svg";
 import transfer from "../../public/image/transfer.svg";
 import flight from "../../public/image/flight.svg";
 import cycle from "../../public/image/recycle.svg";
+import japanImage from "../../public/image/japan.png";
+import indoImage from "../../public/image/indonesia.png";
+import brasilImage from "../../public/image/brasil.png";
+import swissImage from "../../public/image/swiss.png";
 import arrow from "../../public/image/rightarrow.svg";
 import ImgProfile from "../../public/image/ImgProfile.jpeg";
 import message from "../../public/image/btnNotifications.svg";
@@ -130,7 +134,7 @@ export default function Navbar() {
     return (
         <>
             <header className="w-screen fixed z-50 top-0">
-                <div className="bg-white py-4 lg:px-28 max-w-7xl mx-auto flex px-5 justify-between">
+                <div className="bg-white py-4 lg:px-28 flex px-5 justify-between">
                     <div className="flex items-center">
                         <Image src={ankasa} alt="ankasa" onClick={handleHome} className="cursor-pointer" />
                         <h1 className="font-poppins font-bold text-abu text-lg ml-1 cursor-pointer" onClick={handleHome}>
@@ -163,87 +167,35 @@ export default function Navbar() {
                         </div>
                     )}
                     {openFind && (
-                        <div className="bg-white w-custom h-height overflow-y-scroll mt-14 rounded-lg p-6 fixed right-32 lg:right-60 z-50 shadow-lg shadow-black/50">
+                        <div className="bg-white w-custom h-height mt-14 rounded-lg p-6 fixed right-32 lg:right-72 z-50 shadow-lg shadow-black/50">
                             <div>
                                 <h1 className="text-sm font-poppins font-medium">
                                     Hey, <br />
                                     Where you want to go?
                                 </h1>
-                                <div className="flex justify-between items-center mt-4">
-                                    <h1 className="text-xs text-main font-semibold">Recently Searched</h1>
-                                    <Image src={back} width={8} alt="back" />
+                                <div className="w-full mt-4 cursor-pointer rounded-lg overflow-hidden relative ">
+                                    <div className="absolute bg-black/30 w-full h-full flex justify-center items-center">
+                                        <h1 className="font-poppins font-medium text-white text-lg tracking-wild">INDONESIA</h1>
+                                    </div>
+                                    <Image src={indoImage} alt="IndoImage" width={300} className="" />
                                 </div>
-                                <div className="w-full bg-white shadow-lg shadow-slate-500/30 mt-4 rounded-xl p-2 flex flex-row items-center justify-between">
-                                    <div className="flex flex-col justify-start">
-                                        <h1 className="text-xs text-slate-400">From</h1>
-                                        <h1 className="text-xl mt-1 font-bold">Medan</h1>
-                                        <h1 className="text-xs mt-1">Indonesia</h1>
+                                <div className="w-full mt-4 cursor-pointer rounded-lg overflow-hidden relative ">
+                                    <div className="absolute bg-black/30 w-full h-full flex justify-center items-center">
+                                        <h1 className="font-poppins font-medium text-white text-lg tracking-wild">BRAZIL</h1>
                                     </div>
-                                    <Image src={transfer} width={20} alt="transfer" />
-                                    <div className="flex flex-col justify-end">
-                                        <h1 className="text-xs text-slate-400 text-end">To</h1>
-                                        <h1 className="text-xl mt-1 font-bold text-end">Tokyo</h1>
-                                        <h1 className="text-xs mt-1 text-end">Japan</h1>
-                                    </div>
+                                    <Image src={brasilImage} alt="brasilImage" width={300} className="" />
                                 </div>
-                                <div className="mt-4 w-full flex justify-between">
-                                    <div className="w-32 bg-main rounded-lg h-11 flex items-center justify-center p-2 hover:bg-blue-600">
-                                        <Image src={flight} width={18} alt="flight" />
-                                        <a href="#" className="text-xs font-semibold text-white ml-2">
-                                            One Way
-                                        </a>
+                                <div className="w-full mt-4 cursor-pointer rounded-lg overflow-hidden relative ">
+                                    <div className="absolute bg-black/30 w-full h-full flex justify-center items-center">
+                                        <h1 className="font-poppins font-medium text-white text-lg tracking-wild">JAPAN</h1>
                                     </div>
-                                    <div className="w-32 bg-slate-200 rounded-lg h-11 flex items-center justify-center p-2 hover:bg-slate-300">
-                                        <Image src={cycle} width={18} alt="cycle" />
-                                        <a href="#" className="text-xs font-semibold text-abu ml-2">
-                                            Round Trip
-                                        </a>
-                                    </div>
+                                    <Image src={japanImage} alt="japanImage" width={300} className="" />
                                 </div>
-                                <div className="mt-4 w-full">
-                                    <h1 className="text-gray-400 text-sm font-semibold">Departure</h1>
-                                    <div className="relative mt-2">
-                                        <input type="text" placeholder="Select date" value={inputValue} onFocus={toggleCalendar} readOnly className="w-full rounded-lg border border-gray-300 text-xs h-14 p-4 font-bold" />
-                                        <div className="absolute z-10 top-2 right-2 bg-white  p-2 rounded-lg w-9">
-                                            <input type="date" onChange={handleDateChange} className="w-full" />
-                                        </div>
+                                <div className="w-full mt-4 cursor-pointer rounded-lg overflow-hidden relative ">
+                                    <div className="absolute bg-black/30 w-full h-full flex justify-center items-center">
+                                        <h1 className="font-poppins font-medium text-white text-lg tracking-wild">SWISS</h1>
                                     </div>
-                                </div>
-                                <div className="mt-4 w-full">
-                                    <h1 className="text-gray-400 text-sm font-semibold">How many person?</h1>
-                                    <div className="flex w-full justify-between">
-                                        <div className="flex mt-2 rounded-lg border border-gray-300 text-xs h-14 w-32 p-4 font-bold items-center justify-between">
-                                            <h1>2 Child</h1>
-                                            <Image src={back} width={10} alt="back" />
-                                        </div>
-                                        <div className="flex mt-2 rounded-lg border border-gray-300 text-xs h-14 w-32 p-4 font-bold items-center justify-between">
-                                            <h1>4 Adult</h1>
-                                            <Image src={back} width={10} alt="back" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="mt-4 w-full">
-                                    <h1 className="text-gray-400 text-sm font-semibold">Which class do you want?</h1>
-                                    <div className="flex w-full justify-between">
-                                        <div className="flex mt-3 items-center">
-                                            <input type="radio" name="ticketClass" id="economy" />
-                                            <label htmlFor="economy" className="ml-1 text-sm">
-                                                Economy
-                                            </label>
-                                        </div>
-                                        <div className="flex mt-3 items-center">
-                                            <input type="radio" name="ticketClass" id="business" />
-                                            <label htmlFor="business" className="ml-1 text-sm">
-                                                Business
-                                            </label>
-                                        </div>
-                                        <div className="flex mt-3 items-center">
-                                            <input type="radio" name="ticketClass" id="firstclass" />
-                                            <label htmlFor="firstclass" className="ml-1 text-sm">
-                                                First Class
-                                            </label>
-                                        </div>
-                                    </div>
+                                    <Image src={swissImage} alt="swissImage" width={300} className="" />
                                 </div>
                                 <div className="w-full mt-6 bg-main rounded-md h-11 flex justify-between items-center px-5 shadow-lg shadow-blue-500/50 hover:bg-blue-600 cursor-pointer" onClick={handleFlight}>
                                     <h1 className="text-sm font-semibold text-white">SEARCH FLIGHT</h1>
@@ -253,7 +205,7 @@ export default function Navbar() {
                         </div>
                     )}
                     {openMyBooking && (
-                        <div className="bg-slate-100 w-custom h-height mt-14 rounded-lg p-6 fixed right-24 lg:right-32 z-50 shadow-lg shadow-black/50 overflow-y-scroll">
+                        <div className="bg-slate-100 w-custom h-height mt-14 rounded-lg p-6 fixed right-24 lg:right-40 z-50 shadow-lg shadow-black/50 overflow-y-scroll">
                             <div className="w-full bg-white h-24 rounded-lg p-4 flex justify-between">
                                 <div className="">
                                     <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
@@ -537,83 +489,31 @@ export default function Navbar() {
                                                 Hey, <br />
                                                 Where you want to go?
                                             </h1>
-                                            <div className="flex justify-between items-center mt-4">
-                                                <h1 className="text-xs text-main font-semibold">Recently Searched</h1>
-                                                <Image src={back} width={8} alt="back" />
+                                            <div className="w-full mt-3 cursor-pointer rounded-lg overflow-hidden relative ">
+                                                <div className="absolute bg-black/30 w-full h-full flex justify-center items-center">
+                                                    <h1 className="font-poppins font-medium text-white text-lg tracking-wild">INDONESIA</h1>
+                                                </div>
+                                                <Image src={indoImage} alt="IndoImage" width={300} className="" />
                                             </div>
-                                            <div className="w-full bg-white shadow-lg shadow-slate-500/30 mt-4 rounded-xl p-2 flex flex-row items-center justify-between">
-                                                <div className="flex flex-col justify-start">
-                                                    <h1 className="text-xs text-slate-400">From</h1>
-                                                    <h1 className="text-xl mt-1 font-bold">Medan</h1>
-                                                    <h1 className="text-xs mt-1">Indonesia</h1>
+                                            <div className="w-full mt-3 cursor-pointer rounded-lg overflow-hidden relative ">
+                                                <div className="absolute bg-black/30 w-full h-full flex justify-center items-center">
+                                                    <h1 className="font-poppins font-medium text-white text-lg tracking-wild">BRAZIL</h1>
                                                 </div>
-                                                <Image src={transfer} width={20} alt="transfer" />
-                                                <div className="flex flex-col justify-end">
-                                                    <h1 className="text-xs text-slate-400 text-end">To</h1>
-                                                    <h1 className="text-xl mt-1 font-bold text-end">Tokyo</h1>
-                                                    <h1 className="text-xs mt-1 text-end">Japan</h1>
-                                                </div>
+                                                <Image src={brasilImage} alt="brasilImage" width={300} className="" />
                                             </div>
-                                            <div className="mt-4 w-full flex justify-between">
-                                                <div className="w-28 bg-main rounded-lg h-11 flex items-center justify-center p-2 hover:bg-blue-600">
-                                                    <Image src={flight} width={18} alt="flight" />
-                                                    <a href="#" className="text-xs font-semibold text-white ml-2">
-                                                        One Way
-                                                    </a>
+                                            <div className="w-full mt-3 cursor-pointer rounded-lg overflow-hidden relative ">
+                                                <div className="absolute bg-black/30 w-full h-full flex justify-center items-center">
+                                                    <h1 className="font-poppins font-medium text-white text-lg tracking-wild">JAPAN</h1>
                                                 </div>
-                                                <div className="w-28 bg-slate-200 rounded-lg h-11 flex items-center justify-center p-2 hover:bg-slate-300">
-                                                    <Image src={cycle} width={18} alt="cycle" />
-                                                    <a href="#" className="text-xs font-semibold text-abu ml-2">
-                                                        Round Trip
-                                                    </a>
-                                                </div>
+                                                <Image src={japanImage} alt="japanImage" width={300} className="" />
                                             </div>
-                                            <div className="mt-4 w-full">
-                                                <h1 className="text-gray-400 text-sm font-semibold">Departure</h1>
-                                                <div className="relative mt-2">
-                                                    <input type="text" placeholder="Select date" value={inputValue} onFocus={toggleCalendar} readOnly className="w-full rounded-lg border border-gray-300 text-xs h-14 p-4 font-bold" />
-                                                    <div className="absolute z-10 top-2 right-2 bg-white  p-2 rounded-lg w-9">
-                                                        <input type="date" onChange={handleDateChange} className="w-full" />
-                                                    </div>
+                                            <div className="w-full mt-3 cursor-pointer rounded-lg overflow-hidden relative ">
+                                                <div className="absolute bg-black/30 w-full h-full flex justify-center items-center">
+                                                    <h1 className="font-poppins font-medium text-white text-lg tracking-wild">SWISS</h1>
                                                 </div>
+                                                <Image src={swissImage} alt="swissImage" width={300} className="" />
                                             </div>
-                                            <div className="mt-4 w-full">
-                                                <h1 className="text-gray-400 text-sm font-semibold">How many person?</h1>
-                                                <div className="flex w-full justify-between">
-                                                    <div className="flex mt-2 rounded-lg border border-gray-300 text-xs h-14 w-32 p-4 font-bold items-center justify-between">
-                                                        <h1>2 Child</h1>
-                                                        <Image src={back} width={10} alt="back" />
-                                                    </div>
-                                                    <div className="flex mt-2 rounded-lg border border-gray-300 text-xs h-14 w-32 p-4 font-bold items-center justify-between">
-                                                        <h1>4 Adult</h1>
-                                                        <Image src={back} width={10} alt="back" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mt-4 w-full">
-                                                <h1 className="text-gray-400 text-sm font-semibold">Which class do you want?</h1>
-                                                <div className="flex w-full justify-between">
-                                                    <div className="flex mt-3 items-center">
-                                                        <input type="radio" name="ticketClass" id="economy" />
-                                                        <label htmlFor="economy" className="ml-1 text-xs">
-                                                            Economy
-                                                        </label>
-                                                    </div>
-                                                    <div className="flex mt-3 items-center">
-                                                        <input type="radio" name="ticketClass" id="business" />
-                                                        <label htmlFor="business" className="ml-1 text-xs">
-                                                            Business
-                                                        </label>
-                                                    </div>
-                                                    <div className="flex mt-3 items-center">
-                                                        <input type="radio" name="ticketClass" id="firstclass" />
-                                                        <label htmlFor="firstclass" className="ml-1 text-xs">
-                                                            First Class
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="w-full mt-6 bg-main rounded-md h-11 flex justify-between items-center px-5 shadow-lg shadow-blue-500/50 hover:bg-blue-600 cursor-pointer" onClick={handleFlight}>
+                                            <div className="w-full mt-4 bg-main rounded-md h-11 flex justify-between items-center px-5 shadow-lg shadow-blue-500/50 hover:bg-blue-600 cursor-pointer" onClick={handleFlight}>
                                                 <h1 className="text-sm font-semibold text-white">SEARCH FLIGHT</h1>
                                                 <Image src={arrow} width={20} alt="arrow" />
                                             </div>
