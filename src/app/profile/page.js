@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/high-res.css";
@@ -7,13 +7,74 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { privateRoute } from "../../utils/privateRoute";
 import ImgProfile from "../../../public/image/ImgProfile.jpeg";
+import ticketloading from "../../../public/image/ticketloading.gif";
+import ticketnotfound from "../../../public/image/ticketnotfound.png";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 function Profile() {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState("MyBooking");
+    const token = Cookies.get("token");
+    const [flightData, setFlightData] = useState([]);
+    const [userData, setUserData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+        axios
+            .get(`${process.env.NEXT_PUBLIC_API_URL}booking/tickets`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                const data = response.data.data.result;
+                const dataUser = response.data.data.user;
+
+                const modifiedData = data.map((flight) => {
+                    const takeoffTime = flight.ticket.takeoff.substr(11, 5);
+                    const landingTime = flight.ticket.landing.substr(11, 5);
+                    const takeoffDate = flight.ticket.takeoff.substr(0, 10);
+                    const landingDate = flight.ticket.landing.substr(0, 10);
+
+                    const takeoffHour = parseInt(takeoffTime.split(":")[0]);
+                    const takeoffMinute = parseInt(takeoffTime.split(":")[1]);
+                    const landingHour = parseInt(landingTime.split(":")[0]);
+                    const landingMinute = parseInt(landingTime.split(":")[1]);
+
+                    const hours = landingHour - takeoffHour;
+                    const minutes = landingMinute - takeoffMinute;
+
+                    const formattedTimeDistance = `${hours} hours ${minutes} minutes`;
+
+                    const takeoffDateTime = new Date(takeoffDate);
+                    const landingDateTime = new Date(landingDate);
+                    const options = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+                    const formattedTakeoffDate = takeoffDateTime.toLocaleDateString("en-US", options);
+                    const formattedLandingDate = landingDateTime.toLocaleDateString("en-US", options);
+
+                    return {
+                        ...flight,
+                        takeoffTime,
+                        landingTime,
+                        takeoffDate: formattedTakeoffDate,
+                        landingDate: formattedLandingDate,
+                        timeDistance: formattedTimeDistance,
+                    };
+                });
+
+                setFlightData(modifiedData);
+                setUserData(dataUser);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching data: ", error);
+                setIsLoading(false);
+            });
+    }, []);
 
     const handleTabClick = (tabName) => {
         setActiveTab(tabName);
@@ -43,11 +104,11 @@ function Profile() {
         <>
             <Navbar />
             <div className=" flex flex-col md:flex-row justify-between pt-20 bg-bgcolor">
-                <div className="bg-white hidden w-80 lg:w-96 h-custom3 mt-6 ml-6 rounded-lg p-6 z-50 md:flex flex-col items-center">
+                <div className="bg-white hidden w-80 lg:w-96 h-custom3 mt-6 ml-6 rounded-lg p-6 z-40 md:flex flex-col items-center">
                     <Image src={ImgProfile} width={100} alt="ImgProfile" className="rounded-full border-2 border-main p-1 cursor-pointer" />
                     <button className="border-2 border-main py-2 px-4 mt-2 rounded-md text-xs font-poppins font-semibold text-main hover:bg-main hover:text-white cursor-pointer">Change Photo</button>
                     <div className=" flex flex-col items-center mt-4 w-full">
-                        <h1 className="font-poppins font-bold text-xl text-black">Arif F</h1>
+                        <h1 className="font-poppins font-bold text-xl text-black">{userData.name}</h1>
                         <div className="flex items-center mt-1 gap-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path
@@ -141,7 +202,7 @@ function Profile() {
                         <Image src={ImgProfile} alt="ImgProfile" className="rounded-full border-4 border-main p-1 cursor-pointer" width={100} />
                         <button className="border-2 border-main py-2 px-4 rounded-md text-sm font-poppins font-semibold text-main hover:bg-main hover:text-white cursor-pointer">Change Photo</button>
                         <div className="mt-6 flex flex-col justify-center">
-                            <h1 className="text-xl font-poppins font-semibold text-abu">Arif Febriansyah</h1>
+                            <h1 className="text-xl font-poppins font-semibold text-abu text-center">{userData?.name}</h1>
                             <div className="flex mt-2 justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path
@@ -250,152 +311,60 @@ function Profile() {
                                     <h1 className="font-poppins text-main font-medium text-sm">Order History</h1>
                                 </div>
                             </div>
-
-                            <div>
-                                <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
-                                    <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
-                                        <div className="flex mt-2 gap-4">
-                                            <h1 className="font-poppins text-md font-semibold">IDN</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-                                                <path
-                                                    d="M17.5497 14.7334H0.450071C0.201451 14.7334 7.9948e-05 14.9869 7.9948e-05 15.3V16.4333C7.9948e-05 16.7464 0.201451 17 0.450071 17H17.5497C17.7984 17 17.9997 16.7464 17.9997 16.4333V15.3C17.9997 14.9869 17.7984 14.7334 17.5497 14.7334ZM2.26551 10.9534C2.44213 11.1957 2.69019 11.3331 2.94977 11.3327L6.62114 11.3263C6.91088 11.3258 7.19645 11.2395 7.45475 11.0742L15.6378 5.84498C16.3899 5.36438 17.064 4.67837 17.5227 3.77987C18.0377 2.77121 18.0937 2.04129 17.8903 1.52563C17.6876 1.00962 17.1945 0.630663 16.2521 0.553455C15.4126 0.484748 14.5776 0.763119 13.8255 1.24336L11.055 3.01381L4.90414 0.107566C4.83019 0.0448293 4.74427 0.00810666 4.65527 0.00119535C4.56627 -0.00571596 4.47742 0.0174349 4.3979 0.0682542L2.54872 1.25009C2.24863 1.44169 2.17607 1.94602 2.40332 2.26051L6.79692 5.73484L3.89419 7.58993L1.85939 6.29831C1.78928 6.2538 1.71185 6.23067 1.63334 6.23079C1.55483 6.23092 1.47744 6.25429 1.40743 6.29902L0.278793 7.02044C-0.014826 7.20815 -0.0921683 7.6976 0.12214 8.01493L2.26551 10.9534Z"
-                                                    fill="#979797"
-                                                />
-                                            </svg>
-                                            <h1 className="font-poppins text-md font-semibold">JPN</h1>
-                                        </div>
-                                        <h1 className="font-poppins text-little text-gray-400 mb-2">Garuda Indonesia, AB-221</h1>
-                                    </div>
-                                    <div className="flex justify-between mt-2">
-                                        <div className="flex items-center">
-                                            <h1 className="text-sm font-poppins font-semibold text-gray-400 mr-6">Status</h1>
-                                            <h1 className="font-poppins text-small bg-green-400 rounded-md text-white font-semibold p-1 text-center">Eticket issued</h1>
-                                        </div>
-                                        <div className="flex justify-between items-center gap-2">
-                                            <h1 className="font-poppins text-small text-main font-semibold">View Details</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 18 10" fill="none">
-                                                <path d="M15.9999 1.07107L9.58757 7.43757C9.19565 7.82669 8.56021 7.82669 8.16829 7.43757L1.75597 1.07107" stroke="#2395FF" stroke-width="3" />
-                                            </svg>
-                                        </div>
-                                    </div>
+                            {isLoading ? (
+                                <div className="flex flex-col justify-center items-center mt-32">
+                                    <Image src={ticketloading} alt="Loading" width={100} height={100} className="bg-slate-100" />
+                                    <p className="text-main text-lg font-semibold">Loading...</p>
                                 </div>
-
-                                <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
-                                    <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
-                                        <div className="flex mt-2 gap-4">
-                                            <h1 className="font-poppins text-md font-semibold">IDN</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-                                                <path
-                                                    d="M17.5497 14.7334H0.450071C0.201451 14.7334 7.9948e-05 14.9869 7.9948e-05 15.3V16.4333C7.9948e-05 16.7464 0.201451 17 0.450071 17H17.5497C17.7984 17 17.9997 16.7464 17.9997 16.4333V15.3C17.9997 14.9869 17.7984 14.7334 17.5497 14.7334ZM2.26551 10.9534C2.44213 11.1957 2.69019 11.3331 2.94977 11.3327L6.62114 11.3263C6.91088 11.3258 7.19645 11.2395 7.45475 11.0742L15.6378 5.84498C16.3899 5.36438 17.064 4.67837 17.5227 3.77987C18.0377 2.77121 18.0937 2.04129 17.8903 1.52563C17.6876 1.00962 17.1945 0.630663 16.2521 0.553455C15.4126 0.484748 14.5776 0.763119 13.8255 1.24336L11.055 3.01381L4.90414 0.107566C4.83019 0.0448293 4.74427 0.00810666 4.65527 0.00119535C4.56627 -0.00571596 4.47742 0.0174349 4.3979 0.0682542L2.54872 1.25009C2.24863 1.44169 2.17607 1.94602 2.40332 2.26051L6.79692 5.73484L3.89419 7.58993L1.85939 6.29831C1.78928 6.2538 1.71185 6.23067 1.63334 6.23079C1.55483 6.23092 1.47744 6.25429 1.40743 6.29902L0.278793 7.02044C-0.014826 7.20815 -0.0921683 7.6976 0.12214 8.01493L2.26551 10.9534Z"
-                                                    fill="#979797"
-                                                />
-                                            </svg>
-                                            <h1 className="font-poppins text-md font-semibold">JPN</h1>
+                            ) : (
+                                <div>
+                                    {flightData.length === 0 ? (
+                                        <div className="flex flex-col justify-center items-center mt-32">
+                                            <Image src={ticketnotfound} width={100} alt="NotFoundFlight" />
+                                            <p className="text-abu text-lg font-poppins font-semibold">{`You don't have a ticket yet`}</p>
                                         </div>
-                                        <h1 className="font-poppins text-little text-gray-400 mb-2">Garuda Indonesia, AB-221</h1>
-                                    </div>
-                                    <div className="flex justify-between mt-2">
-                                        <div className="flex items-center">
-                                            <h1 className="text-sm font-poppins font-semibold text-gray-400 mr-6">Status</h1>
-                                            <h1 className="font-poppins text-small bg-green-400 rounded-md text-white font-semibold p-1 text-center">Eticket issued</h1>
-                                        </div>
-                                        <div className="flex justify-between items-center gap-2">
-                                            <h1 className="font-poppins text-small text-main font-semibold">View Details</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 18 10" fill="none">
-                                                <path d="M15.9999 1.07107L9.58757 7.43757C9.19565 7.82669 8.56021 7.82669 8.16829 7.43757L1.75597 1.07107" stroke="#2395FF" stroke-width="3" />
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    ) : (
+                                        flightData.map((flight, index) => (
+                                            <div key={index} className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
+                                                <div className="border-b">
+                                                    <h1 className="font-poppins text-little mt-1">{`${flight.takeoffDate}-${flight.takeoffTime}`}</h1>
+                                                    <div className="flex mt-2 gap-4">
+                                                        <h1 className="font-poppins text-md font-semibold">{flight.ticket?.from?.code}</h1>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
+                                                            <path
+                                                                d="M17.5497 14.7334H0.450071C0.201451 14.7334 7.9948e-05 14.9869 7.9948e-05 15.3V16.4333C7.9948e-05 16.7464 0.201451 17 0.450071 17H17.5497C17.7984 17 17.9997 16.7464 17.9997 16.4333V15.3C17.9997 14.9869 17.7984 14.7334 17.5497 14.7334ZM2.26551 10.9534C2.44213 11.1957 2.69019 11.3331 2.94977 11.3327L6.62114 11.3263C6.91088 11.3258 7.19645 11.2395 7.45475 11.0742L15.6378 5.84498C16.3899 5.36438 17.064 4.67837 17.5227 3.77987C18.0377 2.77121 18.0937 2.04129 17.8903 1.52563C17.6876 1.00962 17.1945 0.630663 16.2521 0.553455C15.4126 0.484748 14.5776 0.763119 13.8255 1.24336L11.055 3.01381L4.90414 0.107566C4.83019 0.0448293 4.74427 0.00810666 4.65527 0.00119535C4.56627 -0.00571596 4.47742 0.0174349 4.3979 0.0682542L2.54872 1.25009C2.24863 1.44169 2.17607 1.94602 2.40332 2.26051L6.79692 5.73484L3.89419 7.58993L1.85939 6.29831C1.78928 6.2538 1.71185 6.23067 1.63334 6.23079C1.55483 6.23092 1.47744 6.25429 1.40743 6.29902L0.278793 7.02044C-0.014826 7.20815 -0.0921683 7.6976 0.12214 8.01493L2.26551 10.9534Z"
+                                                                fill="#979797"
+                                                            />
+                                                        </svg>
+                                                        <h1 className="font-poppins text-md font-semibold">{flight.ticket?.to?.code}</h1>
+                                                    </div>
+                                                    <h1 className="font-poppins text-little text-gray-400 mb-2">{`${flight.ticket?.airline?.name}, ${flight.ticket?.from?.code.substr(0, 2)}-${flight.id}`}</h1>
+                                                </div>
+                                                <div className="flex justify-between mt-2">
+                                                    <div className="flex items-center">
+                                                        <h1 className="text-sm font-poppins font-semibold text-gray-400 mr-6">Status</h1>
+                                                        <h1
+                                                            className={`font-poppins text-small ${
+                                                                flight.status.id === 1 ? "bg-orange-400" : flight.status.id === 2 ? "bg-green-400" : flight.status.id === 3 ? "bg-red-400" : ""
+                                                            } rounded-md text-white font-semibold p-1 text-center`}
+                                                        >
+                                                            {flight.status?.name}
+                                                        </h1>
+                                                    </div>
+                                                    <div className="flex justify-between items-center gap-2">
+                                                        <h1 className="font-poppins text-small text-main font-semibold hover:underline cursor-pointer" onClick={() => router.push(`/search/details/payment/pass/${flight.code}`)}>
+                                                            View Details
+                                                        </h1>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 18 10" fill="none">
+                                                            <path d="M15.9999 1.07107L9.58757 7.43757C9.19565 7.82669 8.56021 7.82669 8.16829 7.43757L1.75597 1.07107" stroke="#2395FF" stroke-width="3" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
                                 </div>
-
-                                <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
-                                    <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
-                                        <div className="flex mt-2 gap-4">
-                                            <h1 className="font-poppins text-md font-semibold">IDN</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-                                                <path
-                                                    d="M17.5497 14.7334H0.450071C0.201451 14.7334 7.9948e-05 14.9869 7.9948e-05 15.3V16.4333C7.9948e-05 16.7464 0.201451 17 0.450071 17H17.5497C17.7984 17 17.9997 16.7464 17.9997 16.4333V15.3C17.9997 14.9869 17.7984 14.7334 17.5497 14.7334ZM2.26551 10.9534C2.44213 11.1957 2.69019 11.3331 2.94977 11.3327L6.62114 11.3263C6.91088 11.3258 7.19645 11.2395 7.45475 11.0742L15.6378 5.84498C16.3899 5.36438 17.064 4.67837 17.5227 3.77987C18.0377 2.77121 18.0937 2.04129 17.8903 1.52563C17.6876 1.00962 17.1945 0.630663 16.2521 0.553455C15.4126 0.484748 14.5776 0.763119 13.8255 1.24336L11.055 3.01381L4.90414 0.107566C4.83019 0.0448293 4.74427 0.00810666 4.65527 0.00119535C4.56627 -0.00571596 4.47742 0.0174349 4.3979 0.0682542L2.54872 1.25009C2.24863 1.44169 2.17607 1.94602 2.40332 2.26051L6.79692 5.73484L3.89419 7.58993L1.85939 6.29831C1.78928 6.2538 1.71185 6.23067 1.63334 6.23079C1.55483 6.23092 1.47744 6.25429 1.40743 6.29902L0.278793 7.02044C-0.014826 7.20815 -0.0921683 7.6976 0.12214 8.01493L2.26551 10.9534Z"
-                                                    fill="#979797"
-                                                />
-                                            </svg>
-                                            <h1 className="font-poppins text-md font-semibold">JPN</h1>
-                                        </div>
-                                        <h1 className="font-poppins text-little text-gray-400 mb-2">Garuda Indonesia, AB-221</h1>
-                                    </div>
-                                    <div className="flex justify-between mt-2">
-                                        <div className="flex items-center">
-                                            <h1 className="text-sm font-poppins font-semibold text-gray-400 mr-6">Status</h1>
-                                            <h1 className="font-poppins text-small bg-green-400 rounded-md text-white font-semibold p-1 text-center">Eticket issued</h1>
-                                        </div>
-                                        <div className="flex justify-between items-center gap-2">
-                                            <h1 className="font-poppins text-small text-main font-semibold">View Details</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 18 10" fill="none">
-                                                <path d="M15.9999 1.07107L9.58757 7.43757C9.19565 7.82669 8.56021 7.82669 8.16829 7.43757L1.75597 1.07107" stroke="#2395FF" stroke-width="3" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
-                                    <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
-                                        <div className="flex mt-2 gap-4">
-                                            <h1 className="font-poppins text-md font-semibold">IDN</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-                                                <path
-                                                    d="M17.5497 14.7334H0.450071C0.201451 14.7334 7.9948e-05 14.9869 7.9948e-05 15.3V16.4333C7.9948e-05 16.7464 0.201451 17 0.450071 17H17.5497C17.7984 17 17.9997 16.7464 17.9997 16.4333V15.3C17.9997 14.9869 17.7984 14.7334 17.5497 14.7334ZM2.26551 10.9534C2.44213 11.1957 2.69019 11.3331 2.94977 11.3327L6.62114 11.3263C6.91088 11.3258 7.19645 11.2395 7.45475 11.0742L15.6378 5.84498C16.3899 5.36438 17.064 4.67837 17.5227 3.77987C18.0377 2.77121 18.0937 2.04129 17.8903 1.52563C17.6876 1.00962 17.1945 0.630663 16.2521 0.553455C15.4126 0.484748 14.5776 0.763119 13.8255 1.24336L11.055 3.01381L4.90414 0.107566C4.83019 0.0448293 4.74427 0.00810666 4.65527 0.00119535C4.56627 -0.00571596 4.47742 0.0174349 4.3979 0.0682542L2.54872 1.25009C2.24863 1.44169 2.17607 1.94602 2.40332 2.26051L6.79692 5.73484L3.89419 7.58993L1.85939 6.29831C1.78928 6.2538 1.71185 6.23067 1.63334 6.23079C1.55483 6.23092 1.47744 6.25429 1.40743 6.29902L0.278793 7.02044C-0.014826 7.20815 -0.0921683 7.6976 0.12214 8.01493L2.26551 10.9534Z"
-                                                    fill="#979797"
-                                                />
-                                            </svg>
-                                            <h1 className="font-poppins text-md font-semibold">JPN</h1>
-                                        </div>
-                                        <h1 className="font-poppins text-little text-gray-400 mb-2">Garuda Indonesia, AB-221</h1>
-                                    </div>
-                                    <div className="flex justify-between mt-2">
-                                        <div className="flex items-center">
-                                            <h1 className="text-sm font-poppins font-semibold text-gray-400 mr-6">Status</h1>
-                                            <h1 className="font-poppins text-small bg-green-400 rounded-md text-white font-semibold p-1 text-center">Eticket issued</h1>
-                                        </div>
-                                        <div className="flex justify-between items-center gap-2">
-                                            <h1 className="font-poppins text-small text-main font-semibold">View Details</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 18 10" fill="none">
-                                                <path d="M15.9999 1.07107L9.58757 7.43757C9.19565 7.82669 8.56021 7.82669 8.16829 7.43757L1.75597 1.07107" stroke="#2395FF" stroke-width="3" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="w-full bg-white rounded-lg p-4 my-4 flex flex-col justify-between">
-                                    <div className="border-b">
-                                        <h1 className="font-poppins text-little mt-1">{`Monday, July, 20 '22 - 09:00`}</h1>
-                                        <div className="flex mt-2 gap-4">
-                                            <h1 className="font-poppins text-md font-semibold">IDN</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-                                                <path
-                                                    d="M17.5497 14.7334H0.450071C0.201451 14.7334 7.9948e-05 14.9869 7.9948e-05 15.3V16.4333C7.9948e-05 16.7464 0.201451 17 0.450071 17H17.5497C17.7984 17 17.9997 16.7464 17.9997 16.4333V15.3C17.9997 14.9869 17.7984 14.7334 17.5497 14.7334ZM2.26551 10.9534C2.44213 11.1957 2.69019 11.3331 2.94977 11.3327L6.62114 11.3263C6.91088 11.3258 7.19645 11.2395 7.45475 11.0742L15.6378 5.84498C16.3899 5.36438 17.064 4.67837 17.5227 3.77987C18.0377 2.77121 18.0937 2.04129 17.8903 1.52563C17.6876 1.00962 17.1945 0.630663 16.2521 0.553455C15.4126 0.484748 14.5776 0.763119 13.8255 1.24336L11.055 3.01381L4.90414 0.107566C4.83019 0.0448293 4.74427 0.00810666 4.65527 0.00119535C4.56627 -0.00571596 4.47742 0.0174349 4.3979 0.0682542L2.54872 1.25009C2.24863 1.44169 2.17607 1.94602 2.40332 2.26051L6.79692 5.73484L3.89419 7.58993L1.85939 6.29831C1.78928 6.2538 1.71185 6.23067 1.63334 6.23079C1.55483 6.23092 1.47744 6.25429 1.40743 6.29902L0.278793 7.02044C-0.014826 7.20815 -0.0921683 7.6976 0.12214 8.01493L2.26551 10.9534Z"
-                                                    fill="#979797"
-                                                />
-                                            </svg>
-                                            <h1 className="font-poppins text-md font-semibold">JPN</h1>
-                                        </div>
-                                        <h1 className="font-poppins text-little text-gray-400 mb-2">Garuda Indonesia, AB-221</h1>
-                                    </div>
-                                    <div className="flex justify-between mt-2">
-                                        <div className="flex items-center">
-                                            <h1 className="text-sm font-poppins font-semibold text-gray-400 mr-6">Status</h1>
-                                            <h1 className="font-poppins text-small bg-green-400 rounded-md text-white font-semibold p-1 text-center">Eticket issued</h1>
-                                        </div>
-                                        <div className="flex justify-between items-center gap-2">
-                                            <h1 className="font-poppins text-small text-main font-semibold">View Details</h1>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 18 10" fill="none">
-                                                <path d="M15.9999 1.07107L9.58757 7.43757C9.19565 7.82669 8.56021 7.82669 8.16829 7.43757L1.75597 1.07107" stroke="#2395FF" stroke-width="3" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            )}
                         </div>
                     )}
                     <div className="flex md:hidden w-full h-14 my-4 border-gray-500 border-2 justify-center gap-2 items-center rounded-md  cursor-pointer">
