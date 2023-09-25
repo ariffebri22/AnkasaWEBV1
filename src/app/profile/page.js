@@ -352,7 +352,22 @@ function Profile() {
                                                         </h1>
                                                     </div>
                                                     <div className="flex justify-between items-center gap-2">
-                                                        <h1 className="font-poppins text-small text-main font-semibold hover:underline cursor-pointer" onClick={() => router.push(`/search/details/payment/pass/${flight.code}`)}>
+                                                        <h1
+                                                            className="font-poppins text-small text-main font-semibold hover:underline cursor-pointer"
+                                                            onClick={() => {
+                                                                if (flight.status.id === 1) {
+                                                                    router.push(`/search/details/payment/${flight.code}`);
+                                                                } else if (flight.status.id === 2) {
+                                                                    router.push(`/search/details/payment/pass/${flight.code}`);
+                                                                } else if (flight.status.id === 3) {
+                                                                    Swal.fire({
+                                                                        icon: "error",
+                                                                        title: "Oops...",
+                                                                        text: "It appears you have canceled this flight",
+                                                                    });
+                                                                }
+                                                            }}
+                                                        >
                                                             View Details
                                                         </h1>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 18 10" fill="none">
