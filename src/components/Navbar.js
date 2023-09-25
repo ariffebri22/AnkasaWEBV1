@@ -196,11 +196,9 @@ export default function Navbar() {
                             <Image src={ImgProfile} width={40} alt="ImgProfile" className="rounded-full border-2 border-main p-0.5 cursor-pointer" onClick={handleProfile} />
                         </div>
                     ) : (
-                        <div className="hidden md:flex w-28 h-10 bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50">
-                            <a href="/regis" className="text-white text-sm font-medium">
-                                Sign Up
-                            </a>
-                        </div>
+                        <a href="/regis" className="text-white text-sm font-medium hidden md:flex w-28 h-10 bg-main items-center justify-center rounded-md hover:bg-blue-600 cursor-pointer shadow-lg shadow-blue-500/50">
+                            Sign Up
+                        </a>
                     )}
                     {openFind && (
                         <div className="bg-white w-custom h-height mt-14 rounded-lg p-6 fixed right-32 lg:right-72 z-50 shadow-lg shadow-black/50">
