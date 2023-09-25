@@ -66,10 +66,10 @@ const RangeSlider = ({ min, max, value = { min: min, max: max }, onChange }) => 
                 <div className="slider__track" />
                 <div ref={range} className="slider__range" />
                 <div className="slider__left-value">
-                    <p className="text-primary text-base font-semibold">$ {minVal}</p>
+                    <p className="text-main text-base font-semibold">$ {minVal}</p>
                 </div>
                 <div className="slider__right-value">
-                    <p className="text-primary text-base font-semibold">$ {maxVal}</p>
+                    <p className="text-main text-base font-semibold">$ {maxVal}</p>
                 </div>
             </div>
         </div>
